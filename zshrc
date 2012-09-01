@@ -102,7 +102,8 @@ limit -s
 # загружаем список цветов 
 autoload colors && colors
 
-RPROMPT=" %T"
+PROMPT="%T > %"
+RPROMPT="%{$fg[cyan]%}[%~]"
 
 # Screen title with path
 precmd() {
