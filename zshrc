@@ -103,7 +103,7 @@ limit -s
 autoload colors && colors
 
 PROMPT="%T > %"
-RPROMPT="%{$fg[cyan]%}[%~]"
+RPROMPT="%{$fg[cyan]%}[%~]%{$reset_color%}%"
 
 # Screen title with path
 precmd() {
