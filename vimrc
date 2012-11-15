@@ -35,6 +35,9 @@ Bundle 'matchit.zip'
 " https://github.com/beyondwords/vim-twig.git
 Bundle 'beyondwords/vim-twig.git'
 
+" SnipMate Bundle to work with snippets
+Bundle 'snipMate'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " End Vundle setup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
