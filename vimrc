@@ -12,32 +12,8 @@ call vundle#rc()
 " let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 
-" Vim-rooter bundle - https://github.com/airblade/vim-rooter/
-" Rooter is a Vim plugin which changes the working directory to the 
-" project root when you open a file. Works with all DVSC (like git and others)
-Bundle 'airblade/vim-rooter'
-
-" Command-T bundle - https://wincent.com/products/command-t
-" let easy open files in projects
-" default bounded to <leader>t
-Bundle 'Command-T'
-
-"Vim-fugitive Bundle - https://github.com/tpope/vim-fugitive
-"Add support of git to the vim
-Bundle 'tpope/vim-fugitive'
-
-" Indent guides bundle - https://github.com/vim-scripts/Indent-Guides
-" Indent Guides is a plugin for visually displaying indent levels in Vim.
-" default key binding <Leader>ig
-Bundle 'Indent-Guides'
-
-" Molokai theme. My favorite!
-" Bundle 'molokai'
 " Switch to zenburn theme. Much more comfortable for my eyes
 Bundle 'Zenburn'
-
-" Markdown syntax higlight plugin
-Bundle 'Markdown'
 
 " NerdTREE - https://github.com/scrooloose/nerdtree
 " The NERD tree allows you to explore your filesystem and to open 
@@ -48,13 +24,6 @@ Bundle 'scrooloose/nerdtree'
 
 " tComment plugin — plugin for better commenting
 Bundle 'tComment'
-
-" Zen coding for vim plugin — https://github.com/mattn/zencoding-vim
-" Very usefull when need to work with html
-Bundle 'ZenCoding.vim'
-
-" Vim ftp plugin
-Bundle 'netrw.vim'
 
 " Minibuff Explorer plugin
 Bundle 'fholgado/minibufexpl.vim'
@@ -92,7 +61,7 @@ set encoding=utf-8
 " Если на utf-8 то открываем как cp1251
 set fileencodings=utf-8,cp1251,koi8-r,cp866
 " Сколько строк остается под или над курсором
-set scrolloff=3
+set scrolloff=5
 " Включаем автоматический отступы
 set smartindent
 " Когда буфер теряет фокус, то он не убивается, а просто прячется
@@ -109,11 +78,11 @@ set novisualbell
 set noerrorbells
 
 " Highlight the screen line of the cursor with CursorLine
-" set cursorline
+set cursorline
 " hi CursorLine ctermbg=125 cterm=none
 
 " Indicates a fast terminal connection. Improves smoothness of redrawing
-" set ttyfast
+set ttyfast
 
 " Set ruler at bottom of screen and set its format
 set ruler
@@ -157,7 +126,7 @@ set formatoptions=qrn1
 set fillchars=fold:\-
 
 " Autosave on focus lost, but dont know need it or not
-" au FocusLost * :wa
+au FocusLost * :wa
 
 " Set russian keymap for keyboard
 set keymap=russian-jcukenwin
@@ -171,7 +140,7 @@ set imsearch=0
 " Chose colorscheme
 colorscheme zenburn
 
-" Set default font : Ubuntu Mono 12
+" Set default font : Consolas 12
 set guifont=Consolas\ 12
 " Set cursor behavior
 " TODO: think aboit cursor behavior
@@ -183,7 +152,7 @@ set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait0
 
 " Save last 150 commands
-set history=150
+set history=250
 
 " Open fullscreen in linux
 " set lines=64
@@ -213,9 +182,6 @@ set foldcolumn=2
 " it has not been changed inside of Vim, automatically read it again.
 set autoread
     
-" Match pairs for html tags
-set matchpairs+=<:>
-
 " информация о флагах файла и его пути в строке статуса
 set statusline=%1*%m%*%2*%r%*%3*%h%w%*%{expand(\"%:p:~\")}\ %<
 " информация о положении курсора в строке статуса
@@ -251,9 +217,6 @@ set splitright
 " When on, all the windows are automatically made the same size after
 " splitting or closing a window.
 set noequalalways
-
-" Dont insert spaces when join lines
-set nojoinspaces
 
 " Higlight some symbols
 set list
@@ -296,9 +259,8 @@ set viewoptions=cursor,folds
 
 " 'colorcolumn' is a comma separated list of screen columns that are
 " highlighted with ColorColumn
-set colorcolumn=80,100
+set colorcolumn=80,120
 hi ColorColumn guibg=#444444
-
 
 set timeoutlen=250
 
@@ -307,59 +269,22 @@ set timeoutlen=250
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Leader is: \
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" Insert mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make 'jj' as <esc>. Its rly faster. I sware
 inoremap jj <ESC>
-" Turn F1 off. So annoing...
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-
 " Turn off arrow keys
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-
-" Easy moving betwen lines when wrap enabled
-nnoremap j gj
-vnoremap j gj
-nnoremap k gk
-vnoremap k gk
-" ease of use keyboard mappings (why do I care about top/bottom of screen?)
-map H ^
-map L $
-
-" Remap ';' to ':' for easy going to command mode
-nnoremap ; :
-
-" Remove higlight to previous search result
-nnoremap <leader><space> :noh<cr>
-
-" Split window vertical
-nnoremap <leader>w <C-w>v<C-w>l
-" Navigate around splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Wrap selected text with characters
-vmap s" <Esc>`>a"<Esc>`<i""<Esc>
-vmap s> <Esc>`>a><Esc>`<i<<Esc>
-vmap s) <Esc>`>a)<Esc>`<i((<Esc>
-vmap s' <Esc>`>a'<Esc>`<i''<Esc>
-vmap s] <Esc>`>a]<Esc>`<i[[<Esc>
-
+" Turn F1 off. So annoing...
+inoremap <F1> <ESC>
 " Auto add closing bracket
 inoremap { {}<left>
 inoremap ( ()<left>
 inoremap [ []<left>
-
+" And if we need only one just press two times
 inoremap {{ {
 inoremap (( (
 inoremap [[ [
@@ -369,55 +294,45 @@ inoremap " ""<left>
 " When we need only one quote
 inoremap "" "
 inoremap '' '
+" Insert 'loreum ipsum'
+inoremap <leader>l Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi malesuada, ante at feugiat tincidunt, enim massa gravida metus, commodo lacinia massa diam vel eros. Proin eget urna. Nunc fringilla neque vitae odio. Vivamus vitae ligula.
+" F2 - save filse
+imap <F2> <esc>:w<cr>i
+" <c-f> — change vim keymap
+inoremap <c-f> <c-^>
+" Toggle NerdTree
+inoremap <F3> <ESC>:NERDTreeToggle<cr>
 
-" Move around in insert mode
-inoremap <c-l> <right>
-inoremap <c-h> <left>
-inoremap <c-j> <down>
-inoremap <c-k> <up>
-
-" When indent in visual mode start Visual mode with the same area as the 
-" previous area and the same mode
-vnoremap < <gv
-vnoremap > >gv
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Normal mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn F1 off. So annoing...
+nnoremap <F1> <ESC>
+" Turn off arrow keys
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+" Easy moving betwen lines when wrap enabled
+nnoremap j gj
+nnoremap k gk
+" Remove higlight to previous search result
+nnoremap <leader><space> :noh<cr>
+" Split window vertical
+nnoremap <leader>w <C-w>v<C-w>l
 " Open and reload .vimrc
 nmap <silent> <leader>ev :e $HOME/.vimrc<cr>
 nmap <silent> <leader>sv :so $HOME/.vimrc<cr>
-
-" Insert 'loreum ipsum'
-inoremap <leader>l Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi malesuada, ante at feugiat tincidunt, enim massa gravida metus, commodo lacinia massa diam vel eros. Proin eget urna. Nunc fringilla neque vitae odio. Vivamus vitae ligula.
-
 " F2 - save filse
 nmap <F2> :w<cr>
-vmap <F2> <esc>:w<cr>i
-imap <F2> <esc>:w<cr>i
-" <Ctrl>+S - save a file
-nmap <c-s> :w<cr>
-vmap <c-s> <esc>:w<cr>i
-imap <c-s> <esc>:w<cr>i
-
-" <c-q> — Close buffer and window
-map <C-Q> <ESC>:q<cr>
-" <c-a>q — Close all
-map <C-A>q <ESC>:qa<cr>
-
-" <c-f> — change vim keymap
-inoremap <c-f> <c-^>
-
 " Switch betwen buffers
 nnoremap <F5> :bp<cr>
 nnoremap <F6> :bn<cr>
-
 " Toggle NerdTree
-inoremap <F3> <ESC>:NERDTreeToggle<cr>
 nnoremap <F3> <ESC>:NERDTreeToggle<cr>
-vnoremap <F3> <ESC>:NERDTreeToggle<cr>
-
 " Keep search matches in the middle of the window.
 nnoremap n nzz
 nnoremap N Nzz
-
 " When making a change the cursor position is remembered.  One position is
 " remembered for every change that can be undone, unless it is close to a
 " previous change.  Two commands can be used to jump to positions of changes,
@@ -426,32 +341,34 @@ nnoremap N Nzz
 nnoremap g; g;zz
 " g,			Go to [count] newer cursor position in change list.
 nnoremap g, g,zz
-
 " Insert comments with tComment
 nnoremap // :TComment<CR>
-vnoremap // :TComment<CR>
-
 " IndentGuides Toggle
 nmap <Leader>g :IndentGuidesToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Visual mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn F1 off. So annoing...
+vnoremap <F1> <ESC>
+" Easy moving betwen lines when wrap enabled
+vnoremap j gj
+vnoremap k gk
+" When indent in visual mode start Visual mode with the same area as the 
+" previous area and the same mode
+vnoremap < <gv
+vnoremap > >gv
+" F2 - save filse
+vmap <F2> <esc>:w<cr>i
+" Toggle NerdTree
+vnoremap <F3> <ESC>:NERDTreeToggle<cr>
+" Insert comments with tComment
+vnoremap // :TComment<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Other things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Autocomplit on tab
-function! InsertTabWrapper(direction)
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    elseif "backward" == a:direction
-        return "\<c-p>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
-inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
-
 " indent guieds setings
 let g:indent_guides_color_change_percent = 5
 let g:indent_guides_guide_size = 1
