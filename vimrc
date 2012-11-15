@@ -349,18 +349,20 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Wrap selected text with characters
-vmap s" <Esc>`>a"<Esc>`<i"<Esc>
+vmap s" <Esc>`>a"<Esc>`<i""<Esc>
 vmap s> <Esc>`>a><Esc>`<i<<Esc>
-vmap s) <Esc>`>a)<Esc>`<i(<Esc>
-vmap s' <Esc>`>a'<Esc>`<i'<Esc>
-vmap s] <Esc>`>a]<Esc>`<i[<Esc>
+vmap s) <Esc>`>a)<Esc>`<i((<Esc>
+vmap s' <Esc>`>a'<Esc>`<i''<Esc>
+vmap s] <Esc>`>a]<Esc>`<i[[<Esc>
 
 " Auto add closing bracket
 inoremap { {}<left>
-inoremap {{ {}<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 
+inoremap {{ {
+inoremap (( (
+inoremap [[ [
 " Auto add double quotes
 inoremap ' ''<left>
 inoremap " ""<left>
