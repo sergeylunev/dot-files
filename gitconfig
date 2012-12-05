@@ -5,7 +5,7 @@
 	autocrlf = false
 	safecrlf = true
 	quotepath = false
-	excludesfile = /home/s/.gitignore_global
+	excludesfile = /Users/Sergey/.gitignore_global
 
 [alias]
   	co = checkout
@@ -21,3 +21,5 @@
 	ui = true
 [push]
 	default = current
+[credential]
+	helper = osxkeychain

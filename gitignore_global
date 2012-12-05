@@ -2,3 +2,4 @@
 *.orig
 .idea
 .DS_Store
+.everflowconfig.yml
