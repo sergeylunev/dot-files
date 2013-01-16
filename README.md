@@ -16,8 +16,15 @@ Global .gitignore file. To install type this in terminal:
 and then change `excludefile` option in gitconfig
 
 ## zshrc
+First of all we need to install ("OH MY
+ZSH")[https://github.com/robbyrussell/oh-my-zsh]. To do this, simply run this
+command:
+
+    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+
 Configuration file for zsh console. To install:
 
+    rm ~/.zshrc
     ln -s ~/PATH_TO_DOTIFILED/zshrc ~/.zshrc
 
 ## vim and vimrc
