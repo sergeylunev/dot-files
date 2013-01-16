@@ -35,3 +35,4 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 PATH=/opt/local/bin:/opt/local/sbin:$HOME/.rbenv/bin:$PATH:/usr/local/php5-20120919-075914/bin:/usr/local/share/npm/bin
+eval "$(rbenv init -)"

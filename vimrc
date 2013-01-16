@@ -14,6 +14,7 @@ Bundle 'gmarik/vundle'
 
 " Switch to zenburn theme. Much more comfortable for my eyes
 Bundle 'Zenburn'
+Bundle 'altercation/vim-colors-solarized'
 
 " NerdTREE - https://github.com/scrooloose/nerdtree
 " The NERD tree allows you to explore your filesystem and to open 
@@ -141,10 +142,11 @@ set imsearch=0
 " set spelllang=en,ru
 
 " Chose colorscheme
-colorscheme zenburn
+" colorscheme zenburn
+set background=dark
+colorscheme solarized
 
-" Set default font : Consolas 12
-set guifont=Consolas\ 12
+set guifont=Monaco:h12
 " Set cursor behavior
 " TODO: think aboit cursor behavior
 highlight Cursor guifg=white guibg=#565656
