@@ -26,6 +26,7 @@ Configuration file for zsh console. To install:
 
     rm ~/.zshrc
     ln -s ~/PATH_TO_DOTIFILED/zshrc ~/.zshrc
+    mkdir ~/.zsh
 
 ## vim and vimrc
 First of all init and update submodels for git, it need for vundle bundle:
