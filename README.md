@@ -31,6 +31,16 @@ Then link files:
     ln -s ~/PATH_TO_DOTIFILED/vim ~/.vim
     ln -s ~/PATH_TO_DOTIFILED/vimrc ~/.vimrc
 
+## sf-cache
+Little script which helps with Symfony primissions. To install system wild just
+lynk it to user bin directory
+
+    ln -s ~/PATH_TO_DOTIFILED/sf-cache /usr/local/bin/
+
+Then make it executable
+    
+    chmod +x /usr/local/bin/sf-cache
+
 ## The end
 End yes, its all for now.
 
