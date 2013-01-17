@@ -20,6 +20,7 @@ export PATH=/opt/local/sbin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=/usr/local/php5-20120919-075914/bin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
+export PATH=$HOME/bin:$PATH
 export PATH=./vendor/bin:$PATH
 export PATH=./bin:$PATH
 # editors
