@@ -13,13 +13,14 @@
     a = add
     c = commit -v
     ca = commit -va
-    cm = commit -ma
     u = reset HEAD
     b = branch
     bn = checkout -b
     co = checkout
     m = mergetool
     d = diff
+    pl = pull
+    ph = push
     hist = log --oneline --graph
     histl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
 
