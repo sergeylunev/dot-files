@@ -11,8 +11,7 @@
 [alias]
     s = status -s
     a = add
-    c = commit -v
-    ca = commit -va
+    c = commit -va
     u = reset HEAD
     b = branch
     bn = checkout -b
@@ -20,7 +19,7 @@
     m = mergetool
     d = diff
     pl = pull
-    ph = push
+    ps = push
     hist = log --oneline --graph
     histl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
 

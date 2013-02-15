@@ -370,10 +370,14 @@ vnoremap <F3> <ESC>:NERDTreeToggle<cr>
 " Insert comments with tComment
 vnoremap // :TComment<CR>
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Other things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent guieds setings
 let g:indent_guides_color_change_percent = 5
 let g:indent_guides_guide_size = 1
+
+" Tabs
+au BufRead,BufNewFile *.ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2
+au BufRead,BufNewFile *.erb setlocal tabstop=2 shiftwidth=2 softtabstop=2
+au BufRead,BufNewFile *.rb setlocal tabstop=2 shiftwidth=2 softtabstop=2
