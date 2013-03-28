@@ -20,8 +20,8 @@
     d = diff
     pl = pull
     ps = push
-    hist = log --oneline --graph
-    histl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
+    h = log --oneline --graph
+    hl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
 
 [color]
     ui     = true
