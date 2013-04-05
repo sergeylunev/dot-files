@@ -16,6 +16,7 @@ alias sf='app/console'
 # Envs
 # paths
 export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/php5/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=/opt/local/bin:$PATH
 export PATH=/opt/local/sbin:$PATH
