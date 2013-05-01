@@ -12,6 +12,10 @@ RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%}'
 # aliaces
 alias v='vim'
 alias sf='app/console'
+alias gs='g s'
+alias gps='g ps'
+alias gpl='g pl'
+alias gc='g c'
 
 # Envs
 # paths
