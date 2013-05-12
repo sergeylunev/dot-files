@@ -16,6 +16,8 @@ alias gs='g s'
 alias gps='g ps'
 alias gpl='g pl'
 alias gc='g c'
+# Git send to master
+alias gsm='g a . && g a -u && g stash && g pl && g stash apply && g c && g ps'
 
 # Envs
 # paths
