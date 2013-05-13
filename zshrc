@@ -18,6 +18,8 @@ alias gpl='g pl'
 alias gc='g c'
 # Git send to master
 alias gsm='g a . && g a -u && g stash && g pl && g stash apply && g c && g ps'
+# Git send to current brunch
+alias s='g a . && g a -u && g c && g ps'
 
 # Envs
 # paths
