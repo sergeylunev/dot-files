@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
 DEFAULT_USER="Sergey"
 
-plugins=(git history symfony2)
+plugins=(git history symfony2 capistrano)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
