@@ -1,5 +1,6 @@
 *.php~
 *.orig
 .idea
+.tags
 .DS_Store
 .everflowconfig.yml
