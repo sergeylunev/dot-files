@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="agnoster"
+ZSH_THEME="bira"
 DEFAULT_USER="Sergey"
 
 plugins=(git history symfony2 capistrano)
