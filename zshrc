@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="bira"
+ZSH_THEME="kolo"
 DEFAULT_USER="Sergey"
 
 plugins=(git history symfony2 capistrano)
@@ -12,6 +12,7 @@ RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%}'
 # aliaces
 alias v='vim'
 alias sf='app/console'
+alias sfdc='php app/console doctrine:databse:drop --force && php app/console doctrine:database:create'
 alias gs='g s'
 alias gps='g ps'
 alias gpl='g pl'
