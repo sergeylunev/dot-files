@@ -12,7 +12,7 @@ RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%}'
 # aliaces
 alias v='vim'
 alias sf='app/console'
-alias sfdc='php app/console doctrine:databse:drop --force && php app/console doctrine:database:create'
+alias sfdc='php app/console doctrine:database:drop --force && php app/console doctrine:database:create'
 alias gs='g s'
 alias gps='g ps'
 alias gpl='g pl'
@@ -21,6 +21,7 @@ alias gc='g c'
 alias gsm='g a . && g a -u && g stash && g pl && g stash apply && g c && g ps'
 # Git send to current brunch
 alias s='g a . && g a -u && g c && g ps'
+alias -g G="| grep"
 
 # Envs
 # paths
