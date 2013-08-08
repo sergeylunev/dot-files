@@ -7,7 +7,6 @@ plugins=(git history symfony2 capistrano)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
-RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%}'
 # Customize to your needs...
 # aliaces
 alias v='vim'
