@@ -10,8 +10,10 @@ unsetopt correct_all
 # Customize to your needs...
 # aliaces
 alias v='vim'
+alias p='ping -c 5 ya.ru && ping -c 5 evercodelab.com && ping -c 5 github.com'
 alias sf='app/console'
 alias sfdc='php app/console doctrine:database:drop --force && php app/console doctrine:database:create'
+alias sfdcmf='php app/console doctrine:database:drop --force && php app/console doctrine:database:create && php app/console doctrine:migrations:migrate --no-interaction && php app/console doctrine:fixtures:load --no-interaction'
 alias gs='g s'
 alias gps='g ps'
 alias gpl='g pl'

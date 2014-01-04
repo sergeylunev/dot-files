@@ -1,0 +1,36 @@
+{
+	"always_show_minimap_viewport": true,
+	"bold_folder_labels": true,
+	"caret_style": "phase",
+	"color_scheme": "Packages/User/Tomorrow-Night-Eighties.tmTheme",
+	"drag_text": false,
+	"draw_minimap_border": true,
+	"fallback_encoding": "Cyrillic (Windows 1251)",
+	"font_face": "Menlo",
+	"font_options":
+	[
+		"no_bold",
+		"no_italic"
+	],
+	"font_size": 14.0,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		""
+	],
+	"indent_guide_options":
+	[
+		"draw_active"
+	],
+	"overlay_scroll_bars": "enabled",
+	"rulers":
+	[
+		80,
+		120
+	],
+	"save_on_focus_lost": true,
+	"scroll_past_end": true,
+	"translate_tabs_to_spaces": true,
+	"vintage_start_in_command_mode": true
+}
