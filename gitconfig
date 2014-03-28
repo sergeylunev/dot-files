@@ -26,7 +26,7 @@
     hl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
     create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
     delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
-    merge-branch = !git checkout master && git merge @{-1}
+    merge-branch = !git checkout master && git pull && git merge @{-1}
 
 [color]
     ui     = true
@@ -37,3 +37,6 @@
     default = current
 [credential]
     helper = osxkeychain
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
