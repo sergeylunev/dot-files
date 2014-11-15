@@ -5,3 +5,6 @@
 .DS_Store
 .cap_tasks~
 app/sessions/
+puphpet/
+Vagrantfile
+.vagrant/
