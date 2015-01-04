@@ -29,15 +29,17 @@ Configuration file for zsh console. To install:
     mkdir ~/.zsh
 
 ## vim and vimrc
-First of all init and update submodels for git, it need for vundle bundle:
+First, we need to install vundle, which would handle plugin managment for us.
 
-    git submodule init
-    git submodule update
+    $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Then link files:
 
-    ln -s ~/PATH_TO_DOTIFILED/vim ~/.vim
     ln -s ~/PATH_TO_DOTIFILED/vimrc ~/.vimrc
+
+Next steep install plugins in vim:
+
+    :BundleInstall
 
 ## Some usefull scripts
 You can find them in `bin` directory. To use system wild just create symbolik
@@ -47,4 +49,3 @@ link for `bin` directory in your home folder:
 
 ## The end
 End yes, its all for now.
-

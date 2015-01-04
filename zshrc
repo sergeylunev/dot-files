@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="frisk"
+ZSH_THEME="kolo"
 DEFAULT_USER="Sergey"
 
 plugins=(git history symfony2 capistrano)
@@ -16,6 +16,8 @@ alias sfdc='php app/console doctrine:database:drop --force && php app/console do
 alias sfdcmf='php app/console doctrine:database:drop --force && php app/console doctrine:database:create && php app/console doctrine:migrations:migrate --no-interaction && php app/console doctrine:fixtures:load --no-interaction'
 alias sfdcm='php app/console doctrine:database:drop --force && php app/console doctrine:database:create && php app/console doctrine:migrations:migrate --no-interaction'
 alias sfcc='rm -rf app/cache/* && php app/console cache:warmup && php app/console assetic:dump --force && php app/console assets:install'
+alias sfge='php app/console doctrine:generate:entities'
+alias sfgm='php app/console doctrine:migrations:diff && php app/console doctrine:migrations:migrate -n'
 alias gs='g s'
 alias gps='g ps'
 alias gpl='g pl'
@@ -61,7 +63,6 @@ export PATH=/usr/local/php5/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=/opt/local/bin:$PATH
 export PATH=/opt/local/sbin:$PATH
-export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=/usr/local/php5-20120919-075914/bin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 export PATH=$HOME/bin:$PATH
@@ -71,8 +72,6 @@ export PATH=./bin:$PATH
 export EDITOR='vim'
 export GIT_EDITOR='vim'
 export SHELL='/bin/zsh'
-
-eval "$(rbenv init -)"
 
 HISTSIZE=100
 SAVEHIST=100

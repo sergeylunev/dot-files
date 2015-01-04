@@ -1,44 +1,46 @@
 " Let filetype handling off. Needed by Vundle. On in end of file
+set nocompatible 
 filetype off
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle options && Bundle installing options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Add vundle path
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 " Call Vundle
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " Switch to zenburn theme. Much more comfortable for my eyes
-Bundle 'Zenburn'
-Bundle 'altercation/vim-colors-solarized'
+" Plugin 'Zenburn'
+Plugin 'altercation/vim-colors-solarized'
 
 " NerdTREE - https://github.com/scrooloose/nerdtree
 " The NERD tree allows you to explore your filesystem and to open 
 " files and directories. It presents the filesystem to you in the 
 " form of a tree which you manipulate with the keyboard and/or mouse. 
 " It also allows you to perform simple filesystem operations.
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 
 " tComment plugin — plugin for better commenting
-Bundle 'tComment'
+Plugin 'tComment'
 
 " Minibuff Explorer plugin
-Bundle 'fholgado/minibufexpl.vim'
+Plugin 'fholgado/minibufexpl.vim'
 
 " Matchit plugin, form mutching tags and otver
-Bundle 'matchit.zip'
+Plugin 'matchit.zip'
 
-" twig syntax bundle
+" twig syntax Plugin
 " https://github.com/beyondwords/vim-twig.git
-Bundle 'beyondwords/vim-twig.git'
+Plugin 'beyondwords/vim-twig.git'
 
-" SnipMate Bundle to work with snippets
-Bundle 'snipMate'
+" SnipMate Plugin to work with snippets
+Plugin 'snipMate'
 
+call vundle#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " End Vundle setup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

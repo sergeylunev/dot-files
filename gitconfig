@@ -5,7 +5,7 @@
     autocrlf = false
     safecrlf = true
     quotepath = false
-    excludesfile = /Users/Sergey/.gitignore_global
+    excludesfile = /Users/sergeylunev/.gitignore_global
     editor = /usr/bin/vim
 
 [alias]
