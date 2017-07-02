@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="kolo"
+ZSH_THEME="agnoster"
 DEFAULT_USER="sergeylunev"
 
 DISABLE_AUTO_TITLE="true"
