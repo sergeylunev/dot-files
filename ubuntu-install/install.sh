@@ -1,5 +1,6 @@
 #!/bin/bash
 dir=$PWD
+RUNZHS='no'
 
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
@@ -30,6 +31,7 @@ sudo snap install --classic code
 # Install some needed software
 sudo apt install gnome-tweak-tools
 sudo apt install pritunl-client-electron
+sudo apt install vim
 
 # Installing JetBrainsMono fonts
 mkdir JetBrainsMono
