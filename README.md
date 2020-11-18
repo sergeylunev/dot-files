@@ -1,6 +1,8 @@
 Dot Files
 =========
 
+bash -c "$(wget https://raw.githubusercontent.com/sergeylunev/dot-files/master/full-inatll.sh -O -)"
+
 Repository for my system files. Consist of:
 
 ## gitconfig
