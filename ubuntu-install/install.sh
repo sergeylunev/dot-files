@@ -2,7 +2,7 @@
 dir=$PWD
 RUNZHS='no'
 
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo apt install apt-transport-https ca-certificates curl software-properties-common --yes
 
 # We need to install specific version of PostgreSQL because of this we add here packages from
 # official repository
@@ -29,9 +29,9 @@ sudo snap install phpstorm --classic
 sudo snap install --classic code
 
 # Install some needed software
-sudo apt install gnome-tweak-tools
-sudo apt install pritunl-client-electron
-sudo apt install vim
+sudo apt install gnome-tweak-tools --yes
+sudo apt install pritunl-client-electron --yes
+sudo apt install vim --yes
 
 # Installing JetBrainsMono fonts
 mkdir JetBrainsMono
@@ -45,8 +45,8 @@ cd $dir
 rm -rf JetBrainsMono
 
 # Install and setup ZSH
-sudo apt install zsh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+sudo apt install zsh --yes
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
 cd ..
 rm $(realpath ~)/.zshrc
 ln -s $(realpath zshrc) $(realpath ~)/.zshrc
@@ -56,10 +56,10 @@ rm $(realpath ~)/.gitconfig
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 
 # Installing php 7.4 and some other needed tools
-sudo apt install php7.4	
-sudo apt install php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-xml
-sudo apt install php-pear
-sudp apt install php-xdebug
+sudo apt install php7.4	 --yes
+sudo apt install php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-xml --yes
+sudo apt install php-pear --yes
+sudp apt install php-xdebug --yes
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -69,18 +69,18 @@ mv composer.phar /usr/local/bin/composer
 # TODO: add here copying php config file for installed php 
 
 # Installing pgsql
-sudo apt install postgresql-9.6
+sudo apt install postgresql-9.6 --yes
 # TODO: Add default configs for pgsql if needed
 
 # Installing RabbitMQ
-sudo apt-get install rabbitmq-server
+sudo apt-get install rabbitmq-server --yes
 sudo rabbitmq-plugins enable rabbitmq_management
 
 # Installing MongoDB
-sudo apt install mongodb-server
+sudo apt install mongodb-server --yes
 
 # Installing docker
-sudo apt install docker-ce
+sudo apt install docker-ce --yes
 sudo usermod -aG docker ${USER}
 # Installing docker compose
 curl -s https://api.github.com/repos/docker/compose/releases/latest \
