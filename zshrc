@@ -52,6 +52,8 @@ export PATH=/usr/local/share/npm/bin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=./vendor/bin:$PATH
 export PATH=./bin:$PATH
+export PATH=/snap/bin:$PATH
+export PATH="$HOME/.symfony/bin:$PATH"
 # editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
