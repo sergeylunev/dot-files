@@ -7,4 +7,4 @@ cd Projects
 git clone https://github.com/sergeylunev/dot-files
 cd dot-files/ubuntu-install
 
-bash instal.sh
+bash install.sh
