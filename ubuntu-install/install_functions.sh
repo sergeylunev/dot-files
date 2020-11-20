@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function install {
+function install_f {
   which $1 &> /dev/null
 
   if [ $? -ne 0 ]; then

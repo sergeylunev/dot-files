@@ -4,14 +4,14 @@
 
 dir=$PWD
 
-install git
-install apt-transport-https
-install ca-certificates
-install curl
-install software-properties-common
-install gnome-tweak-tool
-install vim
-install tmux
+install_f git
+install_f apt-transport-https
+install_f ca-certificates
+install_f curl
+install_f software-properties-common
+install_f gnome-tweak-tool
+install_f vim
+install_f tmux
 
 sudo snap install bitwarden
 sudo snap install telegram-desktop
