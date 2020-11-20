@@ -9,16 +9,16 @@ install_f apt-transport-https
 install_f ca-certificates
 install_f curl
 install_f software-properties-common
-install_f gnome-tweak-tool
-install_f vim
-install_f tmux
+# install_f gnome-tweak-tool
+# install_f vim
+# install_f tmux
 
-sudo snap install bitwarden
-sudo snap install telegram-desktop
-sudo snap install kontena-lens --classic
-sudo snap install spotify
-sudo snap install phpstorm --classic
-sudo snap install code --classic
+# sudo snap install bitwarden
+# sudo snap install telegram-desktop
+# sudo snap install kontena-lens --classic
+# sudo snap install spotify
+# sudo snap install phpstorm --classic
+# sudo snap install code --classic
 
 for f in programs/*.sh; do bash "$f" -H; done
 
