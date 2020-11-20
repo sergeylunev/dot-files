@@ -20,7 +20,7 @@ install_f software-properties-common
 # sudo snap install phpstorm --classic
 # sudo snap install code --classic
 
-for f in programs/*.sh; do bash "$f" -H; done
+for f in programms/*.sh; do bash "$f" -H; done
 
 sudo apt upgrade -y
 sudo apt autoremove -y
