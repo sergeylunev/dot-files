@@ -29,7 +29,7 @@ sudo snap install phpstorm --classic
 sudo snap install --classic code
 
 # Install some needed software
-sudo apt install gnome-tweak-tools pritunl-client-electron vim tmux --yes
+sudo apt install gnome-tweak-tool pritunl-client-electron vim tmux --yes
 
 # Installing JetBrainsMono fonts
 mkdir JetBrainsMono
@@ -55,10 +55,8 @@ ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 
 # Installing php 7.4 and some other needed tools
 sudo apt install php7.4	 --yes
-sudo apt install php7.4-bcmath php-mongodb php-redis php-soap php-zip php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-xml --yes
-sudo apt install php-dev --yes
-sudo apt install php-pear --yes
-sudp apt install php-xdebug --yes
+sudo apt install php7.4-bcmath php-redis php-soap php-zip php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-xml --yes
+sudo apt install php-dev php-pear php-xdebug --yes
 
 # Copy php config here
 
@@ -66,6 +64,10 @@ sudp apt install php-xdebug --yes
 sudo apt install librdkafka-dev
 sudo pecl install rdkafka
 sudo pecl install mongodb
+
+ln -s $(realpath 99-php-ini.ini)  /etc/php/7.4/cli/conf.d/99-php-ini.in
+ln -s $(realpath 99-php-ini.ini)  /etc/php/7.4/fpm/conf.d/99-php-ini.in
+ln -s $(realpath 99-php-ini.ini)  /etc/php/7.4/apache2/conf.d/99-php-ini.in
 # Add rdkafka and mongo to php config
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
