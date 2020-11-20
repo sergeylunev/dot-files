@@ -5,6 +5,4 @@ cd $(ralpath ~)
 mkdir Projects
 cd Projects
 git clone https://github.com/sergeylunev/dot-files
-cd dot-files/ubuntu-install
-
-bash install.sh
+bash dot-files/ubuntu-install/install.sh
