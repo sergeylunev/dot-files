@@ -1,292 +1,187 @@
-" Let filetype handling off. Needed by Vundle. On in end of file
-set nocompatible 
-filetype off
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle options && Bundle installing options
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Add vundle path
-set rtp+=~/.vim/bundle/Vundle.vim
-" Call Vundle
-call vundle#begin()
-
-" let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
-
-" Switch to zenburn theme. Much more comfortable for my eyes
-" Plugin 'Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-
-" NerdTREE - https://github.com/scrooloose/nerdtree
-" The NERD tree allows you to explore your filesystem and to open 
-" files and directories. It presents the filesystem to you in the 
-" form of a tree which you manipulate with the keyboard and/or mouse. 
-" It also allows you to perform simple filesystem operations.
-Plugin 'scrooloose/nerdtree'
-
-" tComment plugin — plugin for better commenting
-Plugin 'tComment'
-
-" Minibuff Explorer plugin
-Plugin 'fholgado/minibufexpl.vim'
-
-" Matchit plugin, form mutching tags and otver
-Plugin 'matchit.zip'
-
-" twig syntax Plugin
-" https://github.com/beyondwords/vim-twig.git
-Plugin 'beyondwords/vim-twig.git'
-
-" SnipMate Plugin to work with snippets
-Plugin 'snipMate'
-
-call vundle#end()
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" End Vundle setup
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Start fyle type support
-filetype plugin indent on
-" Включаем подсветку синтаксиса
-syntax on
-" Выключаем обратную совместимость с vi
+" CONFIGS ---------------------------------------------------------------- {{{
+" Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
-" Заделывает кое какие дыры в безопасности
-set modelines=0
-" Настройки табуляции
-" Ставим табуляцию равную 4 символам
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-" Заменяем табы на пробелы
-set smarttab
-" Удаляем пробелы в начале строки одним нажатием
-set expandtab
-" Задаем кодировку текста по умолчанию: utf-8
-set encoding=utf-8
-" Если на utf-8 то открываем как cp1251
-set fileencodings=utf-8,cp1251,koi8-r,cp866
-" Сколько строк остается под или над курсором
-set scrolloff=5
-" Включаем автоматический отступы
-set smartindent
-" Когда буфер теряет фокус, то он не убивается, а просто прячется
-set hidden
 
-" Включаем появление меню при автодополнении в командной строке
-set wildmenu
-" When more than one match, list all matches and complete till longest common string.
-set wildmode=list:longest
+" Enable type file detection. Vim will be able to try to detect the type of
+" file in use.
+filetype on
+
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
+
+" Load an indent file for the detected file type.
+filetype indent on
+
+" Turn syntax highlighting on.
+syntax on
 
 " Dont use visual bell instead of beeping.
 set novisualbell
 " Dont use ringing bell
 set noerrorbells
 
-" Highlight the screen line of the cursor with CursorLine
+" Add numbers to each line on the left-hand side.
+set number
+
+" Highlight cursor line underneath the cursor horizontally.
 set cursorline
-" hi CursorLine ctermbg=125 cterm=none
 
-" Indicates a fast terminal connection. Improves smoothness of redrawing
-set ttyfast
+" Set shift width to 4 spaces.
+set shiftwidth=4
 
-" Set ruler at bottom of screen and set its format
-set ruler
+" Set tab width to 4 columns.
+set tabstop=4
 
-" allow backspacing over autoindent
-" allow backspacing over line breaks (join lines)
-" allow backspacing over the start of insert
-set backspace=indent,eol,start
+" Use space characters instead of tabs.
+set expandtab
 
-" Status line will shown always
-set laststatus=2
-
-" Show the line number relative to the line with the cursor in front of each line
-set relativenumber
-
-" Ignore case in search patterns.
-set ignorecase
-" Override the 'ignorecase' option if the search pattern contains upper case characters.
-set smartcase
-" While typing a search command, show where the pattern, as it was typed so far, matches.
-set incsearch
-" When there is a previous search pattern, highlight all its matches
-set hlsearch
-
-" When on, lines longer than the width of the window will wrap and displaying 
-" continues on the next line
-set wrap
-" Maximum width of text that is being inserted. A longer line will be broken 
-" after white space to get this width
-set textwidth=79
-
-" This is a sequence of letters which describes how automatic formatting is to be done
-" q: Allow formatting of comments with "gq".
-" r: Automatically insert the current comment leader after hitting <Enter> in Insert mode.
-" n: When formatting text, recognize numbered lists.
-" 1: Don't break a line after a one-letter word.  It's broken before it
-"    instead (if possible).
-set formatoptions=qrn1
-
-" Characters to fill the statuslines and vertical separators.
-set fillchars=fold:\-
-
-" Autosave on focus lost, but dont know need it or not
-au FocusLost * :wa
-
-" Set russian keymap for keyboard
-set keymap=russian-jcukenwin
-" Make latin default keymap in insert mode
-set iminsert=0
-" Make latin default keymap in search mode
-set imsearch=0
-" Languages for spell checking. TODO enable this option
-" set spelllang=en,ru
-
-" Chose colorscheme
-" colorscheme zenburn
-set background=dark
-colorscheme solarized
-
-set guifont=Monaco:h12
-" Set cursor behavior
-" TODO: think aboit cursor behavior
-highlight Cursor guifg=white guibg=#565656
-highlight iCursor guifg=white guibg=steelblue
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait0
-
-" Save last 150 commands
-set history=250
-
-" Open fullscreen in linux
-" set lines=64
-" set columns=239
-
-" Close panels and menus in gVim
-set guioptions-=T
-set guioptions-=m
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
-
-" When on, Vim will change the current working directory whenever you
-" open a file, switch buffers, delete a buffer or open/close a window.
-" It will change to the directory containing the file which was opened
-" or selected.
-" set autochdir
-
-" Folding method is: manual
-set foldmethod=manual
-" When non-zero, a column with the specified width is shown at the side
-" of the window which indicates open and closed folds.
-set foldcolumn=2
-
-" When a file has been detected to have been changed outside of Vim and
-" it has not been changed inside of Vim, automatically read it again.
-set autoread
-    
-" информация о флагах файла и его пути в строке статуса
-set statusline=%1*%m%*%2*%r%*%3*%h%w%*%{expand(\"%:p:~\")}\ %<
-" информация о положении курсора в строке статуса
-set statusline+=%=Col:%3*%03c%*\ Ln:%3*%04l/%04L%*
-" информация о типе и атрибутах файла в строке статуса
-set statusline+=%(\ File:%3*%{join(filter([&filetype,&fileformat!=split(&fileformats,\",\")[0]?&fileformat:\"\",&fileencoding!=split(&fileencodings,\",\")[0]?&fileencoding:\"\"],\"!empty(v:val)\"),\"/\")}%*%)
-
-" Enable title string
-set title
-" Set format for title string
-set titlestring=%t%(\ %m%)%(\ %r%)%(\ %h%)%(\ %w%)%(\ (%{expand(\"%:p:~:h\")})%)\ -\ VIM
-
-" This option defines the behavior of the selection. Old let chose next line.
-set selection=old
-
-" Round indent to multiple of 'shiftwidth'
-set shiftround
-
-" When 'confirm' is on, certain operations that would normally
-" fail because of unsaved changes to a buffer, e.g. ":q" and ":e",
-" instead raise a |dialog| asking if you wish to save the current file(s).
-set confirm
-" Some shortner message string
-set shortmess=fimnrxoOtTI
-" Threshold for reporting number of lines changed.  When the number of
-" changed lines is more than 'report' a message will be given for most
-" ":" commands.  If you want it always, set 'report' to 0.
-set report=0
-
-" When on, splitting a window will put the new window right of the current one
-set splitright
-
-" When on, all the windows are automatically made the same size after
-" splitting or closing a window.
-set noequalalways
-
-" Higlight some symbols
-set list
-" List of symbols to higlight.
-set listchars=tab:❘-,extends:»,precedes:«,nbsp:×
-
-" Allow specified keys that move the cursor left/right to move to the
-" previous/next line when the cursor is on the first/last character in
-" the line.
-set whichwrap=b,s,h,l,<,>,~,[,]
-
-" Mouse context menu
-set mousemodel=popup
-
-" Let mouse focusing windows
-set mousefocus
-
-" Dont hide mouse when typing
-set nomousehide
-
-" Which directory to use for the file browser
-" buffer    Use the directory of the related buffer
-set browsedir=buffer
-
-" Show (partial) command in the last line of the screen.
-set showcmd
-
-" Make a backup before overwriting a file.  Leave it around after the
-" file has been successfully written. Set to off
+" Do not save backup files.
 set nobackup
+
 " Use a swapfile for the buffer.  This option can be reset when a
 " swapfile is not wanted for a specific buffer. Turned off
 set noswapfile
 
-" Changes the effect of the |:mkview| command.  It is a comma separated
-" list of words.  Each word enables saving and restoring something:
-"       cursor - cursor position in file and in window
-"       folds - manually created folds, opened/closed folds and local fold options
-set viewoptions=cursor,folds
+" Do not let cursor scroll below or above N number of lines when scrolling.
+set scrolloff=5
+
+" Set default encoding
+set encoding=utf-8
+
+" Do not wrap lines. Allow long lines to extend as far as the line goes.
+set nowrap
+
+" While searching though a file incrementally highlight matching characters
+" as you type.
+set incsearch
+
+" Ignore capital letters during search.
+set ignorecase
+
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+
+" Show partial command you type in the last line of the screen.
+set showcmd
+
+" Show the mode you are on the last line.
+set showmode
+
+" Show matching words during a search.
+set showmatch
+
+" Use highlighting when doing a search.
+set hlsearch
+
+" Set the commands to save in history default number is 20.
+set history=1000
+
+" Enable auto completion menu after pressing TAB.
+set wildmenu
+
+" Make wildmenu behave like similar to Bash completion.
+set wildmode=list:longest
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " 'colorcolumn' is a comma separated list of screen columns that are
 " highlighted with ColorColumn
 set colorcolumn=80,120
 hi ColorColumn guibg=#444444
 
-set timeoutlen=250
+" When on, splitting a window will put the new window right of the current one
+set splitright
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Key's defenition
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Leader is: \
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Insert mode
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Make 'jj' as <esc>. Its rly faster. I sware
-inoremap jj <ESC>
+" Tunr on smartindents
+set smartindent
+" Dont kill buffer when it lose focus
+set hidden
+
+" allow backspacing over autoindent
+" allow backspacing over line breaks (join lines)
+" allow backspacing over the start of insert
+set backspace=indent,eol,start
+
+" Show the line number relative to the line with the cursor in front of each
+" line
+set relativenumber
+
+" Autosave on focus lost, but dont know need it or not
+au FocusLost * :wa
+
+set background=dark
+colorscheme solarized
+
+" }}}
+
+" PLUGINS ---------------------------------------------------------------- {{{
+call plug#begin('~/.vim/plugged')
+     Plug 'preservim/nerdtree'
+     Plug 'arcticicestudio/nord-vim'
+call plug#end()
+" }}}
+
+" MAPPINGS --------------------------------------------------------------- {{{
+
+" Set the backslash as the leader key.
+" let mapleader = "\"
+
+" Press \\ to jump back to the last cursor position.
+
+nnoremap <leader>\ ``
+
+inoremap jj <esc>
+
 " Turn off arrow keys
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
+" When making a change the cursor position is remembered.  One position is
+" remembered for every change that can be undone, unless it is close to a
+" previous change.  Two commands can be used to jump to positions of changes,
+" also those that have been undone:
+" g;            Go to [count] older position in change list.
+nnoremap g; g;zz
+" g,            Go to [count] newer cursor position in change list.
+nnoremap g, g,zz
+
+" Yank from cursor to the end of line.
+nnoremap Y y$
+
+" You can split the window in Vim by typing :split or :vsplit.
+" Navigate the split view easier by pressing CTRL+j, CTRL+k, CTRL+h, or
+" CTRL+l.
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Resize split windows using arrow keys by pressing:
+" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
+noremap <c-up> <c-w>-
+noremap <c-down> <c-w>+
+noremap <c-left> <c-w><
+noremap <c-right> <c-w>>
+
 " Turn F1 off. So annoing...
-inoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+" F2 - save filse
+nmap <F2> :w<cr>
+" NERDTree specific mappings.
+" Map the F3 key to toggle NERDTree open and close.
+nnoremap <F3> :NERDTreeToggle<cr>
+" Switch betwen buffers
+nnoremap <F5> :bp<cr>
+nnoremap <F6> :bn<cr>
+
 " Auto add closing bracket
 inoremap { {}<left>
 inoremap ( ()<left>
@@ -301,85 +196,77 @@ inoremap " ""<left>
 " When we need only one quote
 inoremap "" "
 inoremap '' '
-" Insert 'loreum ipsum'
-inoremap <leader>l Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi malesuada, ante at feugiat tincidunt, enim massa gravida metus, commodo lacinia massa diam vel eros. Proin eget urna. Nunc fringilla neque vitae odio. Vivamus vitae ligula.
-" F2 - save filse
-imap <F2> <esc>:w<cr>i
-" <c-f> — change vim keymap
-inoremap <c-f> <c-^>
-" Toggle NerdTree
-inoremap <F3> <ESC>:NERDTreeToggle<cr>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Normal mode
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn F1 off. So annoing...
-nnoremap <F1> <ESC>
-" Turn off arrow keys
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-" Easy moving betwen lines when wrap enabled
-nnoremap j gj
-nnoremap k gk
-" Remove higlight to previous search result
-nnoremap <leader><space> :noh<cr>
-" Split window vertical
-nnoremap <leader>w <C-w>v<C-w>l
-" Open and reload .vimrc
-nmap <silent> <leader>ev :e $HOME/.vimrc<cr>
-nmap <silent> <leader>sv :so $HOME/.vimrc<cr>
-" F2 - save filse
-nmap <F2> :w<cr>
-" Switch betwen buffers
-nnoremap <F5> :bp<cr>
-nnoremap <F6> :bn<cr>
-" Toggle NerdTree
-nnoremap <F3> <ESC>:NERDTreeToggle<cr>
-" Keep search matches in the middle of the window.
-nnoremap n nzz
-nnoremap N Nzz
-" When making a change the cursor position is remembered.  One position is
-" remembered for every change that can be undone, unless it is close to a
-" previous change.  Two commands can be used to jump to positions of changes,
-" also those that have been undone:
-" g;			Go to [count] older position in change list.
-nnoremap g; g;zz
-" g,			Go to [count] newer cursor position in change list.
-nnoremap g, g,zz
-" Insert comments with tComment
-nnoremap // :TComment<CR>
-" IndentGuides Toggle
-nmap <Leader>g :IndentGuidesToggle<CR>
+" Have nerdtree ignore certain files and directories.
+let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Visual mode
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn F1 off. So annoing...
-vnoremap <F1> <ESC>
-" Easy moving betwen lines when wrap enabled
-vnoremap j gj
-vnoremap k gk
-" When indent in visual mode start Visual mode with the same area as the 
-" previous area and the same mode
-vnoremap < <gv
-vnoremap > >gv
-" F2 - save filse
-vmap <F2> <esc>:w<cr>i
-" Toggle NerdTree
-vnoremap <F3> <ESC>:NERDTreeToggle<cr>
-" Insert comments with tComment
-vnoremap // :TComment<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Other things
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" indent guieds setings
-let g:indent_guides_color_change_percent = 5
-let g:indent_guides_guide_size = 1
+" }}}
 
-" Tabs
-au BufRead,BufNewFile *.ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2
-au BufRead,BufNewFile *.erb setlocal tabstop=2 shiftwidth=2 softtabstop=2
-au BufRead,BufNewFile *.rb setlocal tabstop=2 shiftwidth=2 softtabstop=2
+" VIMSCRIPT -------------------------------------------------------------- {{{
+" This will enable code folding.
+" Use the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" If GUI version of Vim is running set these options.
+if has('gui_running')
+
+    " Set the background tone.
+    set background=dark
+
+    " Set the color scheme.
+    colorscheme nord
+
+    " Set a custom font you have installed on your computer.
+    " Syntax: set guifont=<font_name>\ <font_weight>\ <size>
+    set guifont=JetBrains\ Mono\ 14
+
+    " Display more of the file by default.
+    " Hide the toolbar.
+    set guioptions-=T
+
+    " Hide the the left-side scroll bar.
+    set guioptions-=L
+
+    " Hide the the right-side scroll bar.
+    set guioptions-=r
+
+    " Hide the the menu bar.
+    set guioptions-=m
+
+    " Hide the the bottom scroll bar.
+    set guioptions-=b
+
+    " Map the F4 key to toggle the menu, toolbar, and scroll bar.
+    " <Bar> is the pipe character.
+    " <CR> is the enter key.
+    nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
+        \set guioptions-=mTr<Bar>
+        \else<Bar>
+        \set guioptions+=mTr<Bar>
+        \endif<CR>
+
+endif
+" }}}
+
+" STATUS LINE ------------------------------------------------------------ {{{
+" Clear status line when vimrc is reloaded.
+set statusline=
+"
+" Status line left side.
+set statusline+=\ %F\ %M\ %Y\ %R
+"
+" Use a divider to separate the left side from the right side.
+set statusline+=%=
+"
+" Status line right side.
+set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
+"
+" Show the status on the second to last line.
+set laststatus=2
+
+" }}} 
+
