@@ -42,18 +42,14 @@ alias -g L="| less"
 
 # Envs
 # paths
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
 export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/php5/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=/opt/local/bin:$PATH
 export PATH=/opt/local/sbin:$PATH
-export PATH=/usr/local/php5-20120919-075914/bin:$PATH
-export PATH=/usr/local/share/npm/bin:$PATH
 export PATH=$HOME/bin:$PATH
-export PATH=./vendor/bin:$PATH
-export PATH=./bin:$PATH
-export PATH=/snap/bin:$PATH
-export PATH="$HOME/.symfony/bin:$PATH"
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 # editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'

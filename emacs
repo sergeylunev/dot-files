@@ -3,6 +3,35 @@
 (package-initialize)
 (package-refresh-contents)
 
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+
+(use-package auto-package-update
+  :defer 10
+  :config
+  ;; Delete residual old versions
+  (setq auto-package-update-delete-old-versions t)
+  ;; Do not bother me when updates have taken place.
+  (setq auto-package-update-hide-results t)
+  ;; Update installed packages at startup if there is an update pending.
+  (auto-package-update-maybe))
+
+;; Making it easier to discover Emacs key presses.
+(use-package which-key
+  :diminish
+  :defer 5
+  :config (which-key-mode)
+          (which-key-setup-side-window-bottom)
+          (setq which-key-idle-delay 0.05))
+
+;; Efficient version control.
+;;
+;; Bottom of Emacs will show what branch you're on
+;; and whether the local file is modified or not.
+(use-package magit
+  :config (global-set-key (kbd "C-x g") 'magit-status))
+
 (setq frame-title-format "GNU Emacs: %b")
 
 ;;Font
@@ -89,6 +118,10 @@
 (unless (package-installed-p 'evil)
   (package-install 'evil))
 
+;; Enable Evil
+(require 'evil)
+(evil-mode 1)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -103,6 +136,6 @@
  )
 
 ;; Set color theme
-(unless (package-installed-p 'solarized-theme)
-    (package-install 'solarized-theme))
-(load-theme 'solarized-dark t)
+(unless (package-installed-p 'nord-theme)
+        (package-install 'nord-theme))
+(load-theme 'nord t)
