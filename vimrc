@@ -1,4 +1,4 @@
-" CONFIGS ---------------------------------------------------------------- {{{
+" CONFIGS ---------------------------------------------------------------- {{{{{{
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
@@ -116,7 +116,7 @@ set background=dark
 colorscheme solarized
 
 " }}}
-
+"}}}
 " PLUGINS ---------------------------------------------------------------- {{{
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 let curl_exists=expand('curl')
@@ -142,11 +142,21 @@ call plug#begin(expand('~/.vim/plugged'))
      Plug 'vim-airline/vim-airline-themes'
      Plug 'dense-analysis/ale'
      Plug 'tomtom/tcomment_vim'
+     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+     Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Ale linters variable
 let g:ale_linters = {}
 
+" NERDTree configs
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['node_modules','\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
 
 " }}}
 
@@ -202,12 +212,15 @@ noremap <c-left> <c-w><
 noremap <c-right> <c-w>>
 
 " Turn F1 off. So annoing...
+nnoremap <F1> <ESC>
+inoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 " F2 - save filse
 nmap <F2> :w<cr>
 " NERDTree specific mappings.
 " Map the F3 key to toggle NERDTree open and close.
 nnoremap <F3> :NERDTreeToggle<cr>
+nnoremap <F4> :NERDTreeFind<cr>
 " Switch betwen buffers
 nnoremap <F5> :bp<cr>
 nnoremap <F6> :bn<cr>
@@ -221,6 +234,9 @@ inoremap [ []<left>
 inoremap {{ {
 inoremap (( (
 inoremap [[ [
+" If we need brackets with new line then use \
+inoremap \{ {}<left><cr><esc>O
+inoremap \} {}<left><cr><esc>O
 " Auto add double quotes
 inoremap ' ''<left>
 inoremap " ""<left>
@@ -271,15 +287,6 @@ if has('gui_running')
 
     " Hide the the bottom scroll bar.
     set guioptions-=b
-
-    " Map the F4 key to toggle the menu, toolbar, and scroll bar.
-    " <Bar> is the pipe character.
-    " <CR> is the enter key.
-    nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
-        \set guioptions-=mTr<Bar>
-        \else<Bar>
-        \set guioptions+=mTr<Bar>
-        \endif<CR>
 
 endif
 " }}}
