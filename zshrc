@@ -42,14 +42,12 @@ alias -g L="| less"
 
 # Envs
 # paths
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=/opt/local/bin:$PATH
 export PATH=/opt/local/sbin:$PATH
-export PATH=$HOME/bin:$PATH
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
 # editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
@@ -81,3 +79,5 @@ bindkey "^F" forward-word
 bindkey "^B" backward-word
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
+[[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
+! { which werf | grep -qsE "^/home/sergey/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "1.2" "stable")
