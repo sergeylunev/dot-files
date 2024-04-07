@@ -48,6 +48,7 @@ export PATH=/opt/local/bin:$PATH
 export PATH=/opt/local/sbin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
+export PATH="$PATH:/opt/nvim/"
 # editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
