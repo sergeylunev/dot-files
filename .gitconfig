@@ -1,0 +1,48 @@
+[user]
+    email = sergey@lunyov.ru
+    name = Sergey Lunev
+[core]
+    autocrlf = false
+    safecrlf = true
+    quotepath = false
+    excludesfile = /Users/sergeylunev/.gitignore_global
+    editor = /usr/bin/vim
+
+[alias]
+    s = status -s
+    a = add
+    c = commit -va
+    u = reset HEAD
+    b = branch -a
+    bn = checkout -b
+    co = checkout
+    m = mergetool
+    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+    di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+    pl = pull --ff-only
+    ps = push
+    h = log --oneline --graph
+    hl = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
+    create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+    delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
+    merge-branch = !git checkout master && git pull && git merge @{-1}
+
+[color]
+    ui     = true
+    branch = auto
+    diff   = auto
+    status = auto
+[push]
+    default = current
+[credential]
+    helper = store
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
