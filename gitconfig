@@ -35,14 +35,6 @@
     status = auto
 [push]
     default = current
-[credential]
-    helper = store
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
