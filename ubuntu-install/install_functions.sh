@@ -5,7 +5,7 @@ function install_f {
 
   if [ $? -ne 0 ]; then
     echo "Installing: ${1}..."
-    sudo apt install -y $1
+    sudo nala install -y $1
   else
     echo "Already installed: ${1}"
   fi
