@@ -57,11 +57,13 @@ fc-cache -fv
 # ZSH and OhMyZSH
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
 cd $(realpath ~)/Projects/dot-files/
+rm $(realpath ~)/.zshrc
 ln -s $(realpath zshrc) $(realpath ~)/.zshrc
 ###
 
 # Git config
 rm $(realpath ~)/.gitconfig
+cd $(realpath ~)/Projects/dot-files/
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 ###
 
