@@ -58,7 +58,6 @@ fc-cache -fv
 
 # ZSH and OhMyZSH
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
-rm $(realpath ~)/.zshrc
 cd $(realpath ~)/Projects/dot-files/
 ln -s $(realpath zshrc) $(realpath ~)/.zshrc
 ###
