@@ -60,10 +60,14 @@ cd $(realpath ~)/Projects/dot-files/
 ln -s $(realpath zshrc) $(realpath ~)/.zshrc
 ###
 
+# Git config
 rm $(realpath ~)/.gitconfig
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
+###
 
+# Gnome Terminal Config
 dconf load /org/gnome/terminal/ < $(realpath ~)/Projects/dot-files/gnome-terminal-backup.txt
+###
 
 # Set zsh as default shell
 chsh -s $(which zsh)
