@@ -9,7 +9,7 @@ sudo apt upgrade -y
 sudo apt autoremove -y
 
 sudo apt install nala -y
-sudo nala fetch --ubuntu --auto
+sudo nala fetch --ubuntu --auto --fetches=5
 
 install_f git
 install_f apt-transport-https
