@@ -1,12 +1,13 @@
 #!/bin/bash
 
+dir=$PWD
+
 cd ~/Downloads
-mkdir JetBrainsMono
-cd JetBrainsMono
-wget https://download.jetbrains.com/fonts/JetBrainsMono-2.001.zip
-unzip JetBrainsMono-2.001.zip
-cd ttf
-mkdir ~/.local/share/fonts/
-mv JetBrainsMono-*.ttf ~/.local/share/fonts/
-cd ~/Downloads
-rm -rf JetBrainsMono
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+mkdir $(realpath ~)/.fonts
+mv $(realpath JetBrainsMono.zip) $(realpath ~)/.fonts
+cd $(realpath ~)/.fonts
+unzip JetBrainsMono.zip
+fc-cache -fv
+
+cd dir
