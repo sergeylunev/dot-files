@@ -29,7 +29,6 @@ install_f tar
 
 sudo snap install bitwarden
 sudo snap install telegram-desktop
-sudo snap install spotify
 sudo snap install code --classic
 sudo snap install steam
 
