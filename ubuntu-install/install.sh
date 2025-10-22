@@ -26,19 +26,48 @@ install_f gcc
 install_f make 
 install_f bzip2
 install_f tar
+install_f zsh
 
 sudo snap install bitwarden
 sudo snap install telegram-desktop
 sudo snap install code --classic
 sudo snap install steam
 
-for f in programms/*.sh; do bash "$f" -H; done
+# AppImageLauncher. Helps with installing and handling AppImages
+cd $(realpath ~)/Downloads
+wget https://github.com/TheAssassin/AppImageLauncher/releases/download/v3.0.0-beta-2/appimagelauncher_3.0.0-beta-2-gha280.e110527_amd64.deb
+sudo gdebi --non-interactive appimagelauncher_3.0.0-beta-2-gha280.e110527_amd64.deb 
+rm appimagelauncher_3.0.0-beta-2-gha280.e110527_amd64.deb
+###
+
+# BebraVPN client
+# Need to install it manualy after from ~/Download directory
+cd $(realpath ~)/Downloads
+wget https://amazonvpn.s3.amazonaws.com/Bebra.AppImage
+###
+
+# Install JetBrains Nerd Font
+cd $(realpath ~)/Downloads
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+mkdir $(realpath ~)/.fonts
+mv $(realpath JetBrainsMono.zip) $(realpath ~)/.fonts
+cd $(realpath ~)/.fonts
+unzip JetBrainsMono.zip
+fc-cache -fv
+###
+
+# ZSH and OhMyZSH
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
+rm $(realpath ~)/.zshrc
+cd $(realpath ~)/Projects/dot-files/
+ln -s $(realpath zshrc) $(realpath ~)/.zshrc
+###
 
 rm $(realpath ~)/.gitconfig
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 
 cd $dir
-dconf load /org/gnome/terminal/ < gnome-terminal-backup.txt
+dconf load /org/gnome/terminal/ < $(realpath ~)/Projects/dot-files/gnome-terminal-backup.txt
 
 # Set zsh as default shell
 chsh -s $(which zsh)
