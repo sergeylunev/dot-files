@@ -38,5 +38,8 @@ for f in programms/*.sh; do bash "$f" -H; done
 rm $(realpath ~)/.gitconfig
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 
+cd dir
+dconf load /org/gnome/terminal/ < gnome-terminal-backup.txt
+
 # Set zsh as default shell
 chsh -s $(which zsh)
