@@ -65,7 +65,6 @@ ln -s $(realpath zshrc) $(realpath ~)/.zshrc
 rm $(realpath ~)/.gitconfig
 ln -s $(realpath gitconfig) $(realpath ~)/.gitconfig
 
-cd $dir
 dconf load /org/gnome/terminal/ < $(realpath ~)/Projects/dot-files/gnome-terminal-backup.txt
 
 # Set zsh as default shell
