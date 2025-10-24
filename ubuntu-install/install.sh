@@ -27,6 +27,7 @@ install_f tar
 install_f zsh
 install_f vim
 
+sudo snap install go --classic
 sudo snap install bitwarden
 sudo snap install telegram-desktop
 sudo snap install code --classic
@@ -94,12 +95,6 @@ mv $(realpath JetBrainsMono.zip) $(realpath ~)/.fonts
 cd $(realpath ~)/.fonts
 unzip JetBrainsMono.zip
 fc-cache -fv
-###
-
-# Install golang latest version
-goversion=$(curl https://go.dev/dl/\?mode\=json | grep -o 'go.*.linux-amd64.tar.gz' | head -n 1 | tr -d '\r\n')
-wget "https://dl.google.com/go/$goversion"
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf $goversion
 ###
 
 # ZSH and OhMyZSH
