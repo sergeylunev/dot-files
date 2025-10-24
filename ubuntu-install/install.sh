@@ -25,6 +25,7 @@ install_f make
 install_f bzip2
 install_f tar
 install_f zsh
+install_f vim
 
 sudo snap install bitwarden
 sudo snap install telegram-desktop
