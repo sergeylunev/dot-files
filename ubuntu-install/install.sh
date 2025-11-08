@@ -31,6 +31,7 @@ sudo snap install go --classic
 sudo snap install bitwarden
 sudo snap install telegram-desktop
 sudo snap install code --classic
+sudo snap install obsidian --classic
 sudo snap install steam
 
 # Docker
