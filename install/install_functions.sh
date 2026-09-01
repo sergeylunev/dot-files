@@ -78,3 +78,75 @@ function link_f {
   ln -s "$src" "$dest"
   echo "Linked: ${dest} -> ${src}"
 }
+
+# Makes sure flatpak itself (and the Flathub remote) are set up.
+# Linux-only; no-op if OS_FAMILY is macos.
+function ensure_flatpak {
+  [ "$OS_FAMILY" = "macos" ] && return 0
+
+  install_f flatpak
+  if ! flatpak remote-list | grep -q '^flathub'; then
+    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  fi
+}
+
+# Installs a Flatpak app by its application ID, skipping it if already
+# installed. Usage: flatpak_f <app-id>
+function flatpak_f {
+  local app_id="$1"
+
+  if flatpak list --app --columns=application | grep -qx "$app_id"; then
+    echo "Already installed (flatpak): ${app_id}"
+    return 0
+  fi
+
+  echo "Installing (flatpak): ${app_id}..."
+  flatpak install -y flathub "$app_id"
+}
+
+# Installs a Homebrew cask, skipping it if already installed.
+# macOS-only. Usage: cask_f <cask-name>
+function cask_f {
+  local cask="$1"
+
+  if brew list --cask "$cask" &> /dev/null; then
+    echo "Already installed (cask): ${cask}"
+    return 0
+  fi
+
+  echo "Installing (cask): ${cask}..."
+  brew install --cask "$cask"
+}
+
+# Downloads and installs a Nerd Font from the upstream GitHub release zip.
+# Same mechanism on every OS - no COPR/tap dependency. Idempotent: skips
+# if the font's directory already exists.
+# Usage: install_nerd_font <name-in-release-url, e.g. JetBrainsMono> <version, e.g. v3.4.0>
+function install_nerd_font {
+  local font_name="$1"
+  local version="$2"
+  local dest_dir
+
+  if [ "$OS_FAMILY" = "macos" ]; then
+    dest_dir="$HOME/Library/Fonts/${font_name}NerdFont"
+  else
+    dest_dir="$HOME/.local/share/fonts/${font_name}NerdFont"
+  fi
+
+  if [ -d "$dest_dir" ]; then
+    echo "Already installed (font): ${font_name}"
+    return 0
+  fi
+
+  echo "Installing (font): ${font_name}..."
+  local tmp_zip
+  tmp_zip="$(mktemp --suffix=.zip)"
+  curl -fsSL -o "$tmp_zip" "https://github.com/ryanoasis/nerd-fonts/releases/download/${version}/${font_name}.zip"
+  mkdir -p "$dest_dir"
+  unzip -oq "$tmp_zip" -d "$dest_dir"
+  rm "$tmp_zip"
+
+  if [ "$OS_FAMILY" != "macos" ]; then
+    fc-cache -f "$dest_dir" > /dev/null
+  fi
+}

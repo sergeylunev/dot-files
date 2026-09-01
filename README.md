@@ -12,15 +12,39 @@ bash -c "$(wget https://raw.githubusercontent.com/sergeylunev/dot-files/master/f
 This clones the repo into `~/Projects/dot-files` and runs `install/install.sh`,
 which detects your OS and:
 
-- installs the base toolset (git, zsh, vim, curl, wget, gh, ...) through the
-  right package manager (`dnf` / `apt` via `nala` / `brew`);
-- runs any OS-specific extras (see `install/install.sh` for what each OS gets);
+- installs the base toolset (git, zsh, vim, neovim, kitty, curl, wget, gh,
+  podman, ...) through the right package manager (`dnf` / `apt` via `nala` /
+  `brew`);
+- installs the default desktop apps (see table below);
 - installs oh-my-zsh if it isn't already there;
-- symlinks `zshrc` to `~/.zshrc` (backing up whatever was there first);
+- symlinks `zshrc` and `kitty.conf` (backing up whatever was there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,
 and anything it's about to overwrite gets backed up first (`<file>.bak-<timestamp>`).
+
+### Default desktop apps
+
+| Category | Fedora (KDE) | Ubuntu (GNOME) | macOS |
+|---|---|---|---|
+| Browser (primary) | Zen (flatpak) | Zen (flatpak) | Zen (brew cask) |
+| Browser (secondary) | Chromium (flatpak) | Thorium (apt repo) | Chromium (brew cask) |
+| Editor | Zed (flatpak) + bare Neovim | Zed (flatpak) + bare Neovim | Zed (brew cask) + bare Neovim |
+| Password manager | Bitwarden (flatpak) | Bitwarden (snap) | Bitwarden (brew cask) |
+| Communication | Telegram (flatpak) | Telegram (snap) | Telegram (brew cask) |
+| AppImage integration | Gear Lever (flatpak) | Gear Lever (flatpak) | — |
+| Containers | Podman + podman-compose | Podman + podman-compose | Podman + podman-compose (+ `podman machine`) |
+| Gaming | Steam (flatpak) | Steam (snap) | Steam (brew cask) |
+| Font | JetBrains Mono Nerd Font (same download-and-extract on all three) | same | same |
+
+Thorium has no clean Fedora or macOS package (no Flathub flatpak, and its
+Homebrew cask is broken/deprecated), so those two fall back to Chromium as
+the secondary browser.
+
+Not installed by default: Obsidian, Discord/Slack, a VPN client, Docker
+(Podman replaces it), LibreOffice, VLC. `install/cli-toolbelt-candidates.md`
+has a shortlist of modern CLI tools (fzf, ripgrep, eza, lazygit, ...) worth
+reviewing by hand — none of them are installed automatically either.
 
 ## What's in here
 
@@ -44,16 +68,25 @@ Global gitignore (OS cruft, editor files, common build dirs). Referenced from
 linked in.
 
 ### `kitty.conf`
-Config for the [kitty](https://sw.kovidgoyal.net/kitty/) terminal. Kept for
-future use — not currently installed or linked by `install/install.sh`.
+Config for the [kitty](https://sw.kovidgoyal.net/kitty/) terminal, the default
+terminal emulator. Installed and linked by `install/install.sh` on all three
+OSes. To link it by hand:
 
-    ln -sf ~/PATH_TO_DOTFILES/kitty.conf ~/.config/kitty/kitty.conf
+    ln -sf ~/PATH_TO_DOTFILES/kitty.conf ~/.config/kitty/kitty.conf   # Linux
+    ln -sf ~/PATH_TO_DOTFILES/kitty.conf ~/Library/Preferences/kitty/kitty.conf   # macOS
 
 ### `nvim/`
-Neovim config (lsp, cmp, telescope, treesitter, ...). Kept for future use —
-Neovim isn't currently installed or linked by `install/install.sh`.
+Neovim config (lsp, cmp, telescope, treesitter, ...). `install/install.sh`
+installs the bare `neovim` binary on all three OSes, but does **not** link
+this config yet — it needs a pass to bring it up to date first. To link it
+by hand once it's ready:
 
     ln -sf ~/PATH_TO_DOTFILES/nvim ~/.config/nvim
+
+### `install/cli-toolbelt-candidates.md`
+A shortlist of modern CLI tools (fzf, ripgrep, eza, zoxide, lazygit,
+starship, ...) worth considering for the base toolset — not installed
+automatically, just notes to review by hand.
 
 ### `gnome-terminal-backup.txt`
 A `dconf` dump of GNOME Terminal profiles/settings. Restored automatically by

@@ -46,6 +46,24 @@ install_f unzip
 install_f gcc
 install_f make
 install_f gh
+install_f nvim neovim
+install_f kitty
+
+# Containers - Podman everywhere instead of Docker (daemonless, rootless,
+# free at any scale, docker-CLI-compatible)
+install_f podman
+install_f podman-compose
+
+if [ "$OS_FAMILY" = "macos" ]; then
+  # macOS has no native container support - Podman needs its little VM.
+  if ! podman machine list --format '{{.Name}}' 2>/dev/null | grep -q .; then
+    podman machine init
+  fi
+  podman machine start 2>/dev/null || true
+fi
+
+# Nerd Font, same download-and-extract mechanism on every OS
+install_nerd_font JetBrainsMono v3.4.0
 
 # --- OS-specific extras --------------------------------------------------
 # Add machine/OS-specific software here as needed; these blocks are
@@ -54,6 +72,15 @@ install_f gh
 case "$OS_FAMILY" in
   fedora)
     install_f gnome-tweaks
+
+    ensure_flatpak
+    flatpak_f app.zen_browser.zen        # browser (primary)
+    flatpak_f org.chromium.Chromium      # browser (secondary; no clean Thorium package on Fedora)
+    flatpak_f dev.zed.Zed                # editor
+    flatpak_f com.bitwarden.desktop      # password manager
+    flatpak_f org.telegram.desktop       # communication
+    flatpak_f it.mijorus.gearlever       # AppImage integration
+    flatpak_f com.valvesoftware.Steam    # gaming
     ;;
 
   ubuntu)
@@ -70,30 +97,7 @@ case "$OS_FAMILY" in
     sudo snap install go --classic
     sudo snap install bitwarden
     sudo snap install telegram-desktop
-    sudo snap install code --classic
-    sudo snap install obsidian --classic
     sudo snap install steam
-
-    # Docker
-    sudo apt-get update
-    sudo apt-get install -y ca-certificates curl
-    sudo install -m 0755 -d /etc/apt/keyrings
-    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    sudo chmod a+r /etc/apt/keyrings/docker.asc
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-      $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    if ! which docker-desktop &> /dev/null; then
-      tmp_deb="$(mktemp --suffix=.deb)"
-      wget -O "$tmp_deb" https://desktop.docker.com/linux/main/amd64/docker-desktop-amd64.deb
-      sudo gdebi --non-interactive "$tmp_deb"
-      rm "$tmp_deb"
-      systemctl --user enable docker-desktop
-    fi
 
     # GitHub CLI apt repo (install_f alone won't add the repo)
     if ! which gh &> /dev/null; then
@@ -108,35 +112,30 @@ case "$OS_FAMILY" in
       sudo apt install gh -y
     fi
 
-    # AppImageLauncher
-    if ! dpkg -l appimagelauncher &> /dev/null; then
-      tmp_deb="$(mktemp --suffix=.deb)"
-      wget -O "$tmp_deb" https://github.com/TheAssassin/AppImageLauncher/releases/download/v3.0.0-beta-2/appimagelauncher_3.0.0-beta-2-gha280.e110527_amd64.deb
-      sudo gdebi --non-interactive "$tmp_deb"
-      rm "$tmp_deb"
-    fi
+    # Zen Browser and Zed - flatpak, same app IDs as Fedora
+    ensure_flatpak
+    flatpak_f app.zen_browser.zen
+    flatpak_f dev.zed.Zed
+    flatpak_f it.mijorus.gearlever       # AppImage integration, replaces AppImageLauncher
 
-    # BebraVPN client - download only, needs manual install from ~/Downloads
-    mkdir -p "$HOME/Downloads"
-    wget -O "$HOME/Downloads/Bebra.AppImage" https://amazonvpn.s3.amazonaws.com/Bebra.AppImage
+    # Thorium browser (secondary) - has an actual apt repo, unlike Fedora
+    if ! which thorium-browser &> /dev/null; then
+      sudo wget --no-hsts -O /etc/apt/sources.list.d/thorium.list http://dl.thorium.rocks/debian/dists/stable/thorium.list
+      sudo apt update
+      sudo apt install -y thorium-browser
+    fi
 
     # Gnome Terminal profile
     dconf load /org/gnome/terminal/ < "$REPO_DIR/gnome-terminal-backup.txt"
-
-    # JetBrains Nerd Font
-    if [ ! -d "$HOME/.fonts/JetBrainsMono" ]; then
-      tmp_zip="$(mktemp --suffix=.zip)"
-      wget -O "$tmp_zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
-      mkdir -p "$HOME/.fonts/JetBrainsMono"
-      unzip -o "$tmp_zip" -d "$HOME/.fonts/JetBrainsMono"
-      rm "$tmp_zip"
-      fc-cache -fv
-    fi
     ;;
 
   macos)
-    # brew cask apps go here, e.g.:
-    # brew install --cask bitwarden telegram visual-studio-code obsidian steam
+    cask_f zen                # browser (primary)
+    cask_f chromium           # browser (secondary; Thorium's cask is broken/deprecated)
+    cask_f zed                # editor
+    cask_f bitwarden          # password manager
+    cask_f telegram           # communication
+    cask_f steam              # gaming
     ;;
 esac
 
@@ -150,6 +149,15 @@ fi
 
 link_f "$REPO_DIR/zshrc" "$HOME/.zshrc"
 mkdir -p "$HOME/.zsh"
+
+if [ "$OS_FAMILY" = "macos" ]; then
+  link_f "$REPO_DIR/kitty.conf" "$HOME/Library/Preferences/kitty/kitty.conf"
+else
+  link_f "$REPO_DIR/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+fi
+
+# nvim/ from this repo is not wired in yet - Neovim above is installed as a
+# bare binary only. See README.
 
 # Set zsh as the default shell (takes effect after re-login)
 if [ "$SHELL" != "$(which zsh)" ]; then
