@@ -17,7 +17,8 @@ which detects your OS and:
   `brew`);
 - installs the default desktop apps (see table below);
 - installs oh-my-zsh if it isn't already there;
-- symlinks `zshrc` and `kitty.conf` (backing up whatever was there first);
+- symlinks `zshrc`, `kitty.conf`, `gitconfig` and `gitignore_global`
+  (backing up whatever was there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,
@@ -57,16 +58,17 @@ automatically by `install/install.sh`. To link it by hand:
     mkdir -p ~/.zsh
 
 ### `gitconfig`
-Git config — aliases, user info. Not currently wired into `install/install.sh`
-(it needs a pass to catch up with the machine's actual git setup first). To
-link it by hand:
+Git config — aliases, user info, and the `gh` credential helper for
+`github.com`/`gist.github.com`. Installed and linked by `install/install.sh`
+on all three OSes. `core.editor` is intentionally unset — git falls back to
+`$EDITOR`, set in `zshrc`. To link it by hand:
 
     ln -sf ~/PATH_TO_DOTFILES/gitconfig ~/.gitconfig
 
 ### `gitignore_global`
 Global gitignore (OS cruft, editor files, common build dirs). Referenced from
-`gitconfig`'s `core.excludesfile`, so it only takes effect once `gitconfig` is
-linked in.
+`gitconfig`'s `core.excludesfile` as `~/.gitignore_global`. Installed and
+linked by `install/install.sh` on all three OSes.
 
 ### `kitty.conf`
 Config for the [kitty](https://sw.kovidgoyal.net/kitty/) terminal, the default

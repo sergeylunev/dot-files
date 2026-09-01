@@ -153,6 +153,9 @@ fi
 link_f "$REPO_DIR/zshrc" "$HOME/.zshrc"
 mkdir -p "$HOME/.zsh"
 
+link_f "$REPO_DIR/gitconfig" "$HOME/.gitconfig"
+link_f "$REPO_DIR/gitignore_global" "$HOME/.gitignore_global"
+
 if [ "$OS_FAMILY" = "macos" ]; then
   link_f "$REPO_DIR/kitty.conf" "$HOME/Library/Preferences/kitty/kitty.conf"
 else
