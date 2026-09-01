@@ -35,14 +35,15 @@ and anything it's about to overwrite gets backed up first (`<file>.bak-<timestam
 | AppImage integration | Gear Lever (flatpak) | Gear Lever (flatpak) | — |
 | Containers | Podman + podman-compose | Podman + podman-compose | Podman + podman-compose (+ `podman machine`) |
 | Gaming | Steam (flatpak) | Steam (snap) | Steam (brew cask) |
+| VPN/proxy | Happ (GitHub release .rpm) | Happ (GitHub release .deb) | Happ (GitHub release .dmg) |
 | Font | JetBrains Mono Nerd Font (same download-and-extract on all three) | same | same |
 
 Thorium has no clean Fedora or macOS package (no Flathub flatpak, and its
 Homebrew cask is broken/deprecated), so those two fall back to Chromium as
 the secondary browser.
 
-Not installed by default: Obsidian, Discord/Slack, a VPN client, Docker
-(Podman replaces it), LibreOffice, VLC. `install/cli-toolbelt-candidates.md`
+Not installed by default: Obsidian, Discord/Slack, Docker (Podman replaces
+it), LibreOffice, VLC. `install/cli-toolbelt-candidates.md`
 has a shortlist of modern CLI tools (fzf, ripgrep, eza, lazygit, ...) worth
 reviewing by hand — none of them are installed automatically either.
 

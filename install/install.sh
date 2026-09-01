@@ -65,6 +65,9 @@ fi
 # Nerd Font, same download-and-extract mechanism on every OS
 install_nerd_font JetBrainsMono v3.4.0
 
+# Happ - VPN/proxy client, same GitHub-release install on every OS
+install_happ
+
 # --- OS-specific extras --------------------------------------------------
 # Add machine/OS-specific software here as needed; these blocks are
 # intentionally separate so one OS's extras never run on another.

@@ -150,3 +150,44 @@ function install_nerd_font {
     fc-cache -f "$dest_dir" > /dev/null
   fi
 }
+
+# Installs Happ (Xray-based proxy/VPN client). No flatpak/cask/repo exists
+# for it - only .deb/.rpm/.dmg on its GitHub releases - so this pulls the
+# latest release asset for the current OS directly.
+function install_happ {
+  if which happ &> /dev/null || [ -d "/Applications/Happ.app" ]; then
+    echo "Already installed: happ"
+    return 0
+  fi
+
+  echo "Installing: happ..."
+  local base_url="https://github.com/Happ-proxy/happ-desktop/releases/latest/download"
+
+  case "$OS_FAMILY" in
+    fedora)
+      local tmp_rpm
+      tmp_rpm="$(mktemp --suffix=.rpm)"
+      curl -fsSL -o "$tmp_rpm" "${base_url}/Happ.linux.x64.rpm"
+      sudo dnf install -y "$tmp_rpm"
+      rm "$tmp_rpm"
+      ;;
+    ubuntu)
+      local tmp_deb
+      tmp_deb="$(mktemp --suffix=.deb)"
+      curl -fsSL -o "$tmp_deb" "${base_url}/Happ.linux.x64.deb"
+      sudo apt install -y "$tmp_deb"
+      rm "$tmp_deb"
+      ;;
+    macos)
+      local tmp_dmg mount_point
+      tmp_dmg="$(mktemp --suffix=.dmg)"
+      curl -fsSL -o "$tmp_dmg" "${base_url}/Happ.macOS.universal.dmg"
+      mount_point="$(mktemp -d)"
+      hdiutil attach "$tmp_dmg" -mountpoint "$mount_point" -nobrowse -quiet
+      cp -R "$mount_point"/Happ.app /Applications/
+      hdiutil detach "$mount_point" -quiet
+      rm "$tmp_dmg"
+      rmdir "$mount_point"
+      ;;
+  esac
+}
