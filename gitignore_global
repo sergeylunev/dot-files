@@ -1,0 +1,23 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Env / secrets
+.env
+.env.local
+
+# Logs
+*.log
+
+# Common dependency/build dirs
+node_modules/
+dist/
+build/
+.cache/

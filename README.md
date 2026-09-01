@@ -1,55 +1,74 @@
 Dot Files
 =========
 
+System configuration files, for Fedora, Ubuntu and macOS.
+
+## Quick install
+
 ```bash
-bash -c "$(wget https://raw.githubusercontent.com/sergeylunev/dot-files/master/full-inatll.sh -O -)"
+bash -c "$(wget https://raw.githubusercontent.com/sergeylunev/dot-files/master/full-install.sh -O -)"
 ```
 
-Repository for my system files. Consist of:
+This clones the repo into `~/Projects/dot-files` and runs `install/install.sh`,
+which detects your OS and:
 
-## gitconfig
-My `gitconfig` file. To install
+- installs the base toolset (git, zsh, vim, curl, wget, gh, ...) through the
+  right package manager (`dnf` / `apt` via `nala` / `brew`);
+- runs any OS-specific extras (see `install/install.sh` for what each OS gets);
+- installs oh-my-zsh if it isn't already there;
+- symlinks `zshrc` to `~/.zshrc` (backing up whatever was there first);
+- sets zsh as the default shell.
 
-    ln -s ~/PATH_TO_DOTIFILED/gitconfig ~/.gitconfig
+Safe to re-run: every step checks whether it's already done before doing it,
+and anything it's about to overwrite gets backed up first (`<file>.bak-<timestamp>`).
 
-## gitignore_global
-Global .gitignore file. To install type this in terminal:
+## What's in here
 
-    ln -s ~/PATH_TO_DOTIFILED/gitignore_global ~/.gitignore_global
+### `zshrc`
+zsh config, built on [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh). Installed
+automatically by `install/install.sh`. To link it by hand:
 
-and then change `excludefile` option in gitconfig
+    ln -sf ~/PATH_TO_DOTFILES/zshrc ~/.zshrc
+    mkdir -p ~/.zsh
 
-## zshrc
-First of all we need to install ("OH MY
-ZSH")[https://github.com/robbyrussell/oh-my-zsh]. To do this, simply run this
-command:
+### `gitconfig`
+Git config — aliases, user info. Not currently wired into `install/install.sh`
+(it needs a pass to catch up with the machine's actual git setup first). To
+link it by hand:
 
-    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+    ln -sf ~/PATH_TO_DOTFILES/gitconfig ~/.gitconfig
 
-Configuration file for zsh console. To install:
+### `gitignore_global`
+Global gitignore (OS cruft, editor files, common build dirs). Referenced from
+`gitconfig`'s `core.excludesfile`, so it only takes effect once `gitconfig` is
+linked in.
 
-    rm ~/.zshrc
-    ln -s ~/PATH_TO_DOTIFILED/zshrc ~/.zshrc
-    mkdir ~/.zsh
+### `kitty.conf`
+Config for the [kitty](https://sw.kovidgoyal.net/kitty/) terminal. Kept for
+future use — not currently installed or linked by `install/install.sh`.
 
-## vim and vimrc
-First, we need to install vundle, which would handle plugin managment for us.
+    ln -sf ~/PATH_TO_DOTFILES/kitty.conf ~/.config/kitty/kitty.conf
 
-    $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+### `nvim/`
+Neovim config (lsp, cmp, telescope, treesitter, ...). Kept for future use —
+Neovim isn't currently installed or linked by `install/install.sh`.
 
-Then link files:
+    ln -sf ~/PATH_TO_DOTFILES/nvim ~/.config/nvim
 
-    ln -s ~/PATH_TO_DOTIFILED/vimrc ~/.vimrc
+### `gnome-terminal-backup.txt`
+A `dconf` dump of GNOME Terminal profiles/settings. Restored automatically by
+`install/install.sh` on Ubuntu. To load by hand:
 
-Next steep install plugins in vim:
+    dconf load /org/gnome/terminal/ < gnome-terminal-backup.txt
 
-    :BundleInstall
+### `rmod_kvm.sh`
+Small helper to unload the `kvm`/`kvm_intel` kernel modules (e.g. before
+starting a VM manager that wants exclusive access to virtualization).
 
-## Some usefull scripts
-You can find them in `bin` directory. To use system wild just create symbolik
-link for `bin` directory in your home folder:
-
-    ln -s ~/PATH_TO_DOTIFILED/bin ~
+### `install/install.sh` and `install/install_functions.sh`
+The OS-aware installer described above. `full-install.sh` at the repo root is
+the one-liner bootstrap that clones this repo and kicks it off on a fresh
+machine.
 
 ## The end
 End yes, its all for now.

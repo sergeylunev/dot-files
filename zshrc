@@ -1,26 +1,18 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="bira"
-DEFAULT_USER="sergeylunev"
 
 DISABLE_AUTO_TITLE="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(git history symfony2 capistrano)
+plugins=(git history)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-# aliaces
+# aliases
 alias v='vim'
 alias p='ping -c 5 ya.ru && ping -c 5 evercodelab.com && ping -c 5 github.com'
-alias sf='php app/console'
-alias sfdc='php app/console doctrine:database:drop --force && php app/console doctrine:database:create'
-alias sfdcmf='php app/console doctrine:database:drop --force && php app/console doctrine:database:create && php app/console doctrine:migrations:migrate --no-interaction && php app/console doctrine:fixtures:load --no-interaction'
-alias sfdcm='php app/console doctrine:database:drop --force && php app/console doctrine:database:create && php app/console doctrine:migrations:migrate --no-interaction'
-alias sfcc='rm -rf app/cache/* && php app/console cache:warmup && php app/console assetic:dump --force && php app/console assets:install'
-alias sfge='php app/console doctrine:generate:entities'
-alias sfgm='php app/console doctrine:migrations:diff && php app/console doctrine:migrations:migrate -n'
 alias gs='git status -s'
 alias gps='git push'
 alias gpl='git pull --ff-only'
@@ -30,13 +22,16 @@ alias gsm='git add -A && git commit -va && git push'
 alias s='git add -A && git stash && git commit -va && git push'
 alias gcb='git remote update origin --prune && git branch --merged | grep -v "*" | xargs git branch -D'
 alias mkdir='mkdir -p'
-# Enable aliases to be sudo’ed
+# Enable aliases to be sudo'ed
 alias sudo='sudo '
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-# Global aliaces
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  # Show/hide hidden files in Finder
+  alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+  alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+fi
+
+# Global aliases
 alias -g G="| grep"
 alias -g L="| less"
 
@@ -44,11 +39,12 @@ alias -g L="| less"
 # paths
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
-export PATH=/opt/local/bin:$PATH
-export PATH=/opt/local/sbin:$PATH
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  export PATH=/opt/local/bin:$PATH
+  export PATH=/opt/local/sbin:$PATH
+fi
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
-export PATH="$PATH:/opt/nvim/"
 # editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
@@ -81,4 +77,4 @@ bindkey "^B" backward-word
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
-! { which werf | grep -qsE "^/home/sergey/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "1.2" "stable")
+export PATH=$HOME/.local/bin:$PATH
