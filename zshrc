@@ -5,13 +5,13 @@ ZSH_THEME="bira"
 DISABLE_AUTO_TITLE="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(git history)
+plugins=(git history extract command-not-found zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
 # aliases
-alias v='vim'
+alias v='nvim'
 alias gs='git status -s'
 alias gps='git push'
 alias gpl='git pull --ff-only'
@@ -63,6 +63,12 @@ setopt no_hist_beep
 setopt hist_save_no_dups
 setopt auto_cd
 setopt rmstarsilent
+setopt autopushd
+setopt pushd_ignore_dups
+
+# Completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
 
 bindkey "^R" history-incremental-search-backward
 bindkey "^F" forward-word

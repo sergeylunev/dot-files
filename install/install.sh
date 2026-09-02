@@ -155,6 +155,18 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
 fi
 
+# External plugins referenced in zshrc's `plugins=(...)` - not bundled with
+# oh-my-zsh itself, so they need their own idempotent git clone.
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+  git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+fi
+
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+  git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+fi
+
 # --- Dotfiles symlinks -----------------------------------------------------
 
 link_f "$REPO_DIR/zshrc" "$HOME/.zshrc"
