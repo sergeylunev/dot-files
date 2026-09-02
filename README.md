@@ -31,6 +31,7 @@ See [`docs/install.md`](docs/install.md) for how that's implemented.
 | [`docs/shell.md`](docs/shell.md) | `zshrc` — oh-my-zsh theme/plugins, aliases, env, history, completion, keybindings |
 | [`docs/git.md`](docs/git.md) | `gitconfig` and `gitignore_global` — settings, credential helper, alias reference |
 | [`docs/install.md`](docs/install.md) | How `install.sh`/`install_functions.sh`/`full-install.sh` work: OS detection, idempotency, structure |
+| [`docs/kitty-keybindings.md`](docs/kitty-keybindings.md) | kitty keyboard shortcuts — custom and default, plus a `cmd`/Super-key caveat on Linux |
 | [`docs/to-review.md`](docs/to-review.md) | Shortlist of CLI tools worth reviewing by hand — not installed automatically |
 
 ## The end

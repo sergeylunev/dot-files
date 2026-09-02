@@ -29,7 +29,9 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   the rest of `kitty.conf`. kitty resolves `include` paths relative to
   `kitty.conf`'s own directory *without following symlinks*, so
   `install.sh` symlinks `forest.conf` into the same config directory as
-  `kitty.conf`, not just `kitty.conf` itself.
+  `kitty.conf`, not just `kitty.conf` itself. Keyboard shortcuts (custom and
+  default) are documented in
+  [`docs/kitty-keybindings.md`](kitty-keybindings.md).
 - **Neovim** — installed as a bare binary everywhere. The `nvim/` config in
   this repo (lsp, cmp, telescope, treesitter, ...) is **not** linked yet —
   it needs a pass to bring it up to date first. To link it by hand once
