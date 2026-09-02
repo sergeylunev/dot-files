@@ -33,6 +33,18 @@
     create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
     delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
     merge-branch = !git checkout master && git pull && git merge @{-1}
+    squash-branch = !"f() { if ! git diff --quiet || ! git diff --cached --quiet; then echo \"squash-branch: working tree not clean, aborting\" >&2; exit 1; fi; base=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null); base=${base#origin/}; if [ -z \"$base\" ]; then if git show-ref --verify --quiet refs/heads/master; then base=master; elif git show-ref --verify --quiet refs/heads/main; then base=main; else echo \"squash-branch: could not determine base branch\" >&2; exit 1; fi; fi; mb=$(git merge-base \"$base\" HEAD); first=$(git rev-list --reverse \"$mb\"..HEAD | head -1); if [ -z \"$first\" ]; then echo \"squash-branch: no commits to squash\" >&2; exit 1; fi; msg=$(git log -1 --format=%B \"$first\"); git reset --soft \"$mb\" && git commit -m \"$msg\"; }; f"
+
+    unstage = reset HEAD --
+    amend = commit --amend --no-edit
+    undo = reset --soft HEAD~1
+    wip = commit -am \"WIP\"
+    last = log -1 HEAD --stat
+    aliases = config --get-regexp ^alias\\.
+    root = rev-parse --show-toplevel
+    sync = !git fetch --all --prune && git pull --ff-only
+    branches = branch -vv
+    contributors = shortlog -sn
 
 [color]
     ui     = true

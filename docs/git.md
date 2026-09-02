@@ -77,6 +77,40 @@ from a higher-priority config file, so only `gh` handles these hosts.
 | `git create-branch <name>` | push a new branch to `origin` and track it locally | `git create-branch feature/x` |
 | `git delete-branch <name>` | delete a branch both locally and on `origin` | `git delete-branch feature/x` |
 | `git merge-branch` | checkout `master`, pull, merge the previously-checked-out branch | run right after finishing work on a feature branch |
+| `git squash-branch` | squash every commit unique to the current branch into one, keeping the **first** commit's full message (subject + body) | see below |
+| `git unstage` | `reset HEAD --` | explicit-named twin of `u` |
+| `git amend` | `commit --amend --no-edit` | fold staged changes into the last commit without touching its message |
+| `git undo` | `reset --soft HEAD~1` | undo the last commit, keeping its changes staged |
+| `git wip` | `commit -am "WIP"` | quick throwaway checkpoint of everything |
+| `git last` | `log -1 HEAD --stat` | what changed in the last commit |
+| `git aliases` | `config --get-regexp ^alias\.` | list every alias defined here |
+| `git root` | `rev-parse --show-toplevel` | absolute path to the repo root |
+| `git sync` | `fetch --all --prune && pull --ff-only` | refresh remote-tracking branches and fast-forward the current one in one step |
+| `git branches` | `branch -vv` | branches with upstream tracking + ahead/behind status (more detail than `b`) |
+| `git contributors` | `shortlog -sn` | commit counts per author |
+
+#### `git squash-branch`
+
+Squashes every commit the current branch has that its base branch doesn't,
+down to a single commit — keeping the **first** of those commits' message
+(subject + body), not the last.
+
+1. Aborts if the working tree isn't clean (staged or unstaged changes) —
+   `reset --soft` wouldn't touch them, but the result would be ambiguous.
+2. Finds the base branch: `origin/HEAD` if the remote has one configured,
+   falling back to a local `master` or `main`.
+3. Finds the merge-base of that branch with `HEAD`, and the oldest commit
+   after it — that commit's message is what survives.
+4. `reset --soft` to the merge-base, then commits everything with that
+   message.
+
+```bash
+git checkout feature/x
+git squash-branch
+```
+
+No arguments; if the base branch can't be determined (no `origin/HEAD` and
+neither `master` nor `main` exists locally), it aborts rather than guessing.
 
 `zshrc` has its own shorter aliases (`gs`, `gc`, `gps`, ...) that wrap some
 of these at the shell level — see `docs/shell.md`.
