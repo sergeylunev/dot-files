@@ -176,10 +176,15 @@ link_f "$REPO_DIR/gitconfig" "$HOME/.gitconfig"
 link_f "$REPO_DIR/gitignore_global" "$HOME/.gitignore_global"
 
 if [ "$OS_FAMILY" = "macos" ]; then
-  link_f "$REPO_DIR/kitty.conf" "$HOME/Library/Preferences/kitty/kitty.conf"
+  KITTY_CONFIG_DIR="$HOME/Library/Preferences/kitty"
 else
-  link_f "$REPO_DIR/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+  KITTY_CONFIG_DIR="$HOME/.config/kitty"
 fi
+link_f "$REPO_DIR/kitty.conf" "$KITTY_CONFIG_DIR/kitty.conf"
+# kitty resolves `include` paths relative to kitty.conf's own directory
+# without following symlinks, so forest.conf needs its own symlink
+# alongside it - see docs/apps.md.
+link_f "$REPO_DIR/forest.conf" "$KITTY_CONFIG_DIR/forest.conf"
 
 # nvim/ from this repo is not wired in yet - Neovim above is installed as a
 # bare binary only. See README.

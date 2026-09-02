@@ -19,7 +19,17 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   `~/.config/kitty/kitty.conf` (Linux) or
   `~/Library/Preferences/kitty/kitty.conf` (macOS). Sets JetBrains Mono
   Nerd Font as the terminal font, among other tweaks — see the file itself
-  (heavily commented, organized in foldable sections).
+  (heavily commented, organized in foldable sections). Color scheme is
+  `forest.conf`, pulled in via `include forest.conf` — a port of the
+  [CustomForest iTerm2 theme](https://github.com/sergeylunev/CustomForestTheme)
+  (ansi colors, background/foreground, cursor, selection, URL color; iTerm
+  fields with no kitty equivalent — badge, cursor guide, search-match
+  background — are dropped). It's a separate file rather than inlined so it
+  can be swapped for another `kitten themes` scheme later without touching
+  the rest of `kitty.conf`. kitty resolves `include` paths relative to
+  `kitty.conf`'s own directory *without following symlinks*, so
+  `install.sh` symlinks `forest.conf` into the same config directory as
+  `kitty.conf`, not just `kitty.conf` itself.
 - **Neovim** — installed as a bare binary everywhere. The `nvim/` config in
   this repo (lsp, cmp, telescope, treesitter, ...) is **not** linked yet —
   it needs a pass to bring it up to date first. To link it by hand once
