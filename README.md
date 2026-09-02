@@ -16,7 +16,9 @@ which detects your OS and:
   podman, ...) through the right package manager (`dnf` / `apt` via `nala` /
   `brew`);
 - installs the default desktop apps (see table below);
-- installs oh-my-zsh if it isn't already there;
+- installs oh-my-zsh if it isn't already there, plus the `zsh-autosuggestions`
+  and `zsh-syntax-highlighting` plugins (not bundled with oh-my-zsh, cloned
+  separately into its `custom/plugins`);
 - symlinks `zshrc`, `kitty.conf`, `gitconfig` and `gitignore_global`
   (backing up whatever was there first);
 - sets zsh as the default shell.
@@ -51,8 +53,11 @@ reviewing by hand — none of them are installed automatically either.
 ## What's in here
 
 ### `zshrc`
-zsh config, built on [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh). Installed
-automatically by `install/install.sh`. To link it by hand:
+zsh config, built on [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh). Plugins:
+`git`, `history`, `extract`, `command-not-found` (bundled with oh-my-zsh), plus
+`zsh-autosuggestions` and `zsh-syntax-highlighting` (external, cloned by
+`install/install.sh`). Installed automatically by `install/install.sh`. To
+link it by hand:
 
     ln -sf ~/PATH_TO_DOTFILES/zshrc ~/.zshrc
     mkdir -p ~/.zsh
