@@ -180,9 +180,11 @@ else
 fi
 link_f "$REPO_DIR/kitty.conf" "$KITTY_CONFIG_DIR/kitty.conf"
 # kitty resolves `include` paths relative to kitty.conf's own directory
-# without following symlinks, so forest.conf needs its own symlink
-# alongside it - see docs/apps.md.
+# without following symlinks, so every file it includes needs its own
+# symlink alongside it too - see docs/apps.md.
 link_f "$REPO_DIR/forest.conf" "$KITTY_CONFIG_DIR/forest.conf"
+link_f "$REPO_DIR/keybindings-macos.conf" "$KITTY_CONFIG_DIR/keybindings-macos.conf"
+link_f "$REPO_DIR/keybindings-linux.conf" "$KITTY_CONFIG_DIR/keybindings-linux.conf"
 
 # nvim/ from this repo is not wired in yet - Neovim above is installed as a
 # bare binary only. See README.

@@ -15,7 +15,8 @@ which detects your OS and:
 - installs the base toolset and the default desktop apps — see
   [`docs/apps.md`](docs/apps.md);
 - installs oh-my-zsh and its plugins — see [`docs/shell.md`](docs/shell.md);
-- symlinks `zshrc`, `kitty.conf`, `forest.conf`, `gitconfig` and
+- symlinks `zshrc`, `kitty.conf` (+ `forest.conf`,
+  `keybindings-macos.conf`/`keybindings-linux.conf`), `gitconfig` and
   `gitignore_global` (backing up whatever was there first);
 - sets zsh as the default shell.
 
