@@ -23,7 +23,10 @@ Already installed today: `bat`, `jq`, `tmux`, `gh`.
 - **direnv** - per-directory environment variables, auto-loaded on `cd`.
 
 ## Shell UX
-- **starship** - fast, customizable prompt (works with zsh out of the box).
+- **starship** - fast, customizable prompt (works with zsh out of the box). Simpler
+  alternative to oh-my-zsh themes if `bira` (current `ZSH_THEME` in `zshrc`) ever
+  feels limiting - worth a look now that JetBrains Mono Nerd Font is installed
+  by default and would render its icons.
 - **tldr** - short, example-first man pages.
 
 ## System monitoring

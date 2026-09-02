@@ -49,6 +49,14 @@ install_f gh
 install_f nvim neovim
 install_f kitty
 
+# Go - same install_f mechanism on every OS, package name differs
+case "$OS_FAMILY" in
+  fedora) GO_PKG="golang" ;;
+  ubuntu) GO_PKG="golang-go" ;;
+  macos)  GO_PKG="go" ;;
+esac
+install_f go "$GO_PKG"
+
 # Containers - Podman everywhere instead of Docker (daemonless, rootless,
 # free at any scale, docker-CLI-compatible)
 install_f podman
@@ -97,7 +105,6 @@ case "$OS_FAMILY" in
     install_f gnome-tweaks
     sudo apt install -y gnome-shell-extension-manager
 
-    sudo snap install go --classic
     sudo snap install bitwarden
     sudo snap install telegram-desktop
     sudo snap install steam

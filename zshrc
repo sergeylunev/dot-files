@@ -12,7 +12,6 @@ unsetopt correct_all
 
 # aliases
 alias v='vim'
-alias p='ping -c 5 ya.ru && ping -c 5 evercodelab.com && ping -c 5 github.com'
 alias gs='git status -s'
 alias gps='git push'
 alias gpl='git pull --ff-only'
@@ -46,12 +45,11 @@ fi
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
 # editors
-export EDITOR='vim'
-export GIT_EDITOR='vim'
-export SHELL='/bin/zsh'
+export EDITOR='nvim'
+export GIT_EDITOR='nvim'
 
-HISTSIZE=100
-SAVEHIST=100
+HISTSIZE=50000
+SAVEHIST=50000
 HISTFILE=~/.zsh/history
 setopt inc_append_history
 setopt extended_history
@@ -66,12 +64,7 @@ setopt hist_save_no_dups
 setopt auto_cd
 setopt rmstarsilent
 
-zle -N predict-on
-zle -N predict-off
-
 bindkey "^R" history-incremental-search-backward
-bindkey "^X^Z" predict-on   # C-x C-z
-bindkey "^Z" predict-off    # C-z
 bindkey "^F" forward-word
 bindkey "^B" backward-word
 bindkey "^A" beginning-of-line
