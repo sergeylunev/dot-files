@@ -82,8 +82,6 @@ install_happ
 
 case "$OS_FAMILY" in
   fedora)
-    install_f gnome-tweaks
-
     ensure_flatpak
     flatpak_f app.zen_browser.zen        # browser (primary)
     flatpak_f org.chromium.Chromium      # browser (secondary; no clean Thorium package on Fedora)
