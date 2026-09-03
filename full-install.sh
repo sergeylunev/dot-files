@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #
 # One-liner bootstrap: clones this repo and runs install/install.sh.
 # Requires git to already be on PATH.

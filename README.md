@@ -6,7 +6,7 @@ System configuration files, for Fedora, Ubuntu and macOS.
 ## Quick install
 
 ```bash
-bash -c "$(wget https://raw.githubusercontent.com/sergeylunev/dot-files/master/full-install.sh -O -)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/sergeylunev/dot-files/master/full-install.sh)"
 ```
 
 This clones the repo into `~/Projects/dot-files` and runs `install/install.sh`,
