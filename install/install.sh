@@ -173,11 +173,11 @@ mkdir -p "$HOME/.zsh"
 link_f "$REPO_DIR/gitconfig" "$HOME/.gitconfig"
 link_f "$REPO_DIR/gitignore_global" "$HOME/.gitignore_global"
 
-if [ "$OS_FAMILY" = "macos" ]; then
-  KITTY_CONFIG_DIR="$HOME/Library/Preferences/kitty"
-else
-  KITTY_CONFIG_DIR="$HOME/.config/kitty"
-fi
+# kitty on macOS is documented to also check ~/Library/Preferences/kitty,
+# but in practice it unreliably resolves symlinks placed there (see
+# https://github.com/kovidgoyal/kitty/issues/1331) - ~/.config/kitty is the
+# path that actually works, on macOS same as Linux.
+KITTY_CONFIG_DIR="$HOME/.config/kitty"
 link_f "$REPO_DIR/kitty.conf" "$KITTY_CONFIG_DIR/kitty.conf"
 # kitty resolves `include` paths relative to kitty.conf's own directory
 # without following symlinks, so every file it includes needs its own

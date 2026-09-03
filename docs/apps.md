@@ -15,9 +15,12 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
 `kitty`.
 
 - **`kitty`** — the default terminal emulator on all three OSes. Config is
-  `kitty.conf` in the repo root, symlinked to
-  `~/.config/kitty/kitty.conf` (Linux) or
-  `~/Library/Preferences/kitty/kitty.conf` (macOS). Sets JetBrains Mono
+  `kitty.conf` in the repo root, symlinked to `~/.config/kitty/kitty.conf`
+  on every OS, macOS included — kitty is documented to also check
+  `~/Library/Preferences/kitty` there, but it unreliably resolves symlinks
+  placed in that directory (see
+  [kovidgoyal/kitty#1331](https://github.com/kovidgoyal/kitty/issues/1331)),
+  so `~/.config/kitty` is the path that actually works. Sets JetBrains Mono
   Nerd Font as the terminal font, among other tweaks — see the file itself
   (heavily commented, organized in foldable sections). Color scheme is
   `forest.conf`, pulled in via `include forest.conf` — a port of the
