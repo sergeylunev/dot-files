@@ -141,6 +141,7 @@ function link_configs {
     # Zed uses ~/.config/zed on every OS, macOS included - no OS branching
     # needed here (unlike kitty).
     link_f "$configs_dir/zed/settings.json" "$HOME/.config/zed/settings.json"
+    link_f "$configs_dir/zed/themes/forest.json" "$HOME/.config/zed/themes/forest.json"
   fi
 }
 
