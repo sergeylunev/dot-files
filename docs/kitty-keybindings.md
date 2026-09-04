@@ -6,6 +6,57 @@ shortcuts — every `map` line here only *adds* a binding on top of them. So
 every shortcut below is live at the same time: kitty's own defaults (mostly
 `kitty_mod+...`) plus whatever this repo adds.
 
+## Splitting the screen: windows & layouts
+
+kitty arranges things in three levels: **OS windows** (actual desktop
+windows) → **tabs** within an OS window → **kitty windows** within a tab —
+what other terminals/multiplexers would call "panes". How those kitty
+windows are arranged and resized inside a tab is controlled by the active
+**layout** ([kitty layouts docs](https://sw.kovidgoyal.net/kitty/layouts/)).
+This is kitty's native answer to tmux/screen-style pane splitting — see
+[`docs/tmux-research.md`](tmux-research.md) for why this repo relies on it
+instead of configuring a multiplexer: the one thing kitty can't do is
+survive a detach (persist a session across an SSH disconnect or a crashed
+terminal), and that's not a need for local, single-machine work.
+
+`kitty.conf` in this repo doesn't set `enabled_layouts`, so all seven
+layouts kitty ships are available:
+
+| Layout | Arrangement |
+|---|---|
+| `tall` | One full-height window on the left, the rest stacked on the right — **kitty's default** for a new tab |
+| `fat` | One full-width window on top, the rest stacked below |
+| `grid` | All windows in an even grid |
+| `horizontal` | All windows side by side |
+| `vertical` | All windows stacked top to bottom |
+| `stack` | One window fullscreen at a time, others hidden behind it |
+| `splits` | Arbitrary manual splits, closest analog to tmux panes |
+
+Relevant shortcuts (all already in the tables above, gathered here for the
+splitting workflow specifically):
+
+| Shortcut | Action |
+|---|---|
+| `kitty_mod+enter` / `cmd+enter` (macOS) | New window — added and positioned automatically per the *active* layout's own rules, not a manually chosen direction |
+| `kitty_mod+l` | Cycle to the next layout (`tall` → `fat` → `grid` → `horizontal` → `vertical` → `stack` → `splits` → back to `tall`) |
+| `kitty_mod+]` / `kitty_mod+[` | Focus next / previous window |
+| `kitty_mod+1` … `kitty_mod+9`/`0` | Focus window 1–10 directly |
+| `kitty_mod+f` / `kitty_mod+b` | Move the active window forward / backward within the layout |
+| `kitty_mod+r` | Start resizing the active window — arrow keys grow/shrink it, `enter`/`escape` confirms |
+| `kitty_mod+w` / `shift+cmd+d` (macOS) | Close the active window |
+
+In every layout except `splits`, `kitty_mod+enter` just adds a window and
+the layout algorithm decides where it goes — there's no per-split "which
+direction" choice, by design (that's what `tall`/`fat`/`grid`/etc. are for:
+pick the layout whose fixed arrangement matches what you want). Switching
+to `splits` (`kitty_mod+l` until it's active) is what gets manual,
+tmux-style control — new windows split along `split_axis` (kitty's default:
+`horizontal`). Directional splitting (`launch --location=hsplit` /
+`--location=vsplit`, bound to keys of your choice) is documented in
+kitty's own layouts page but isn't mapped in this repo's `kitty.conf`
+today — worth revisiting only if `splits`' default axis behavior turns out
+to be limiting in practice.
+
 ## OS-specific bindings: `keybindings-macos.conf` / `keybindings-linux.conf`
 
 `kitty.conf` has:
