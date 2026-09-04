@@ -21,6 +21,7 @@
     u = reset HEAD
     b = branch -a
     bn = checkout -b
+    bd = branch -d
     co = checkout
     m = mergetool
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
