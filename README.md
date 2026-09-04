@@ -15,14 +15,17 @@ which detects your OS and:
 - installs the base toolset and the default desktop apps — see
   [`docs/apps.md`](docs/apps.md);
 - installs oh-my-zsh and its plugins — see [`docs/shell.md`](docs/shell.md);
-- symlinks `zshrc`, `kitty.conf` (+ `forest.conf`,
-  `keybindings-macos.conf`/`keybindings-linux.conf`), `gitconfig` and
-  `gitignore_global` (backing up whatever was there first);
+- symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git` and `kitty`
+  (backing up whatever was there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,
 and anything it's about to overwrite gets backed up first (`<file>.bak-<timestamp>`).
 See [`docs/install.md`](docs/install.md) for how that's implemented.
+
+To (re)link just the configs — no package installs, no oh-my-zsh — run
+`install/link.sh` (optionally naming one or more apps, e.g.
+`install/link.sh kitty`).
 
 ## Docs
 

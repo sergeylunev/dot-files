@@ -15,8 +15,8 @@ include keybindings-${KITTY_OS}.conf
 ```
 
 kitty expands `${KITTY_OS}` itself (`macos`/`linux`/`bsd`) when resolving
-`include` paths — no shell scripting involved, no need for `install.sh` to
-pick a file. `install.sh` just symlinks both files into the same directory
+`include` paths — no shell scripting involved, no need for `link_configs` to
+pick a file. `link_configs` just symlinks both files into the same directory
 as `kitty.conf` (kitty resolves `include` relative to `kitty.conf`'s own
 directory *without following symlinks*, so every included file needs its
 own symlink there too — same reason `forest.conf` does).

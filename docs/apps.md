@@ -14,16 +14,17 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
 (package name differs: `golang` / `golang-go` / `go`), bare `neovim`,
 `kitty`.
 
-- **`kitty`** — the default terminal emulator on all three OSes. Config is
-  `kitty.conf` in the repo root, symlinked to `~/.config/kitty/kitty.conf`
-  on every OS, macOS included — kitty is documented to also check
-  `~/Library/Preferences/kitty` there, but it unreliably resolves symlinks
-  placed in that directory (see
+- **`kitty`** — the default terminal emulator on all three OSes. Config lives
+  in [`configs/kitty/`](../configs/kitty), symlinked file-by-file into
+  `~/.config/kitty/` on every OS, macOS included — kitty is documented to
+  also check `~/Library/Preferences/kitty` there, but it unreliably resolves
+  symlinks placed in that directory (see
   [kovidgoyal/kitty#1331](https://github.com/kovidgoyal/kitty/issues/1331)),
-  so `~/.config/kitty` is the path that actually works. Sets JetBrains Mono
-  Nerd Font as the terminal font, among other tweaks — see the file itself
-  (heavily commented, organized in foldable sections). Color scheme is
-  `forest.conf`, pulled in via `include forest.conf` — a port of the
+  so `~/.config/kitty` is the path that actually works. `kitty.conf` sets
+  JetBrains Mono Nerd Font as the terminal font, among other tweaks — see
+  the file itself (heavily commented, organized in foldable sections).
+  Color scheme is `forest.conf`, pulled in via `include forest.conf` — a
+  port of the
   [CustomForest iTerm2 theme](https://github.com/sergeylunev/CustomForestTheme)
   (ansi colors, background/foreground, cursor, selection, URL color; iTerm
   fields with no kitty equivalent — badge, cursor guide, search-match
@@ -31,21 +32,22 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   can be swapped for another `kitten themes` scheme later without touching
   the rest of `kitty.conf`. kitty resolves `include` paths relative to
   `kitty.conf`'s own directory *without following symlinks*, so
-  `install.sh` symlinks every file `kitty.conf` includes into the same
-  config directory, not just `kitty.conf` itself — that's `forest.conf`
-  plus `keybindings-macos.conf`/`keybindings-linux.conf`, the OS-specific
+  `link_configs` (in `install/install_functions.sh`) symlinks every file
+  `kitty.conf` includes into the same config directory, not just
+  `kitty.conf` itself — that's `forest.conf` plus
+  `keybindings-macos.conf`/`keybindings-linux.conf`, the OS-specific
   keyboard shortcuts (`cmd` on macOS, `ctrl`-based equivalents on Linux,
   picked automatically via kitty's `${KITTY_OS}` include-path expansion —
-  no OS branching needed in `install.sh` itself for *which* file to use).
-  Fully documented in
+  no OS branching needed for *which* file to use). Fully documented in
   [`docs/kitty-keybindings.md`](kitty-keybindings.md).
-- **Neovim** — installed as a bare binary everywhere. The `nvim/` config in
-  this repo (lsp, cmp, telescope, treesitter, ...) is **not** linked yet —
-  it needs a pass to bring it up to date first. To link it by hand once
-  it's ready:
+- **Neovim** — installed as a bare binary everywhere. The
+  [`configs/nvim/`](../configs/nvim) config in this repo (lsp, cmp,
+  telescope, treesitter, ...) is **not** linked yet — it needs a pass to
+  bring it up to date first, and `link_configs` doesn't know about it yet
+  either. To link it by hand once it's ready:
 
   ```bash
-  ln -sf ~/PATH_TO_DOTFILES/nvim ~/.config/nvim
+  ln -sf ~/PATH_TO_DOTFILES/configs/nvim ~/.config/nvim
   ```
 
 ### Containers — Podman, not Docker

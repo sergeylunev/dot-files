@@ -166,28 +166,13 @@ if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
 fi
 
 # --- Dotfiles symlinks -----------------------------------------------------
+# Same link_configs function install/link.sh calls - use that script
+# directly to (re)link a single app's config later, e.g. after editing it.
 
-link_f "$REPO_DIR/zshrc" "$HOME/.zshrc"
-mkdir -p "$HOME/.zsh"
+link_configs
 
-link_f "$REPO_DIR/gitconfig" "$HOME/.gitconfig"
-link_f "$REPO_DIR/gitignore_global" "$HOME/.gitignore_global"
-
-# kitty on macOS is documented to also check ~/Library/Preferences/kitty,
-# but in practice it unreliably resolves symlinks placed there (see
-# https://github.com/kovidgoyal/kitty/issues/1331) - ~/.config/kitty is the
-# path that actually works, on macOS same as Linux.
-KITTY_CONFIG_DIR="$HOME/.config/kitty"
-link_f "$REPO_DIR/kitty.conf" "$KITTY_CONFIG_DIR/kitty.conf"
-# kitty resolves `include` paths relative to kitty.conf's own directory
-# without following symlinks, so every file it includes needs its own
-# symlink alongside it too - see docs/apps.md.
-link_f "$REPO_DIR/forest.conf" "$KITTY_CONFIG_DIR/forest.conf"
-link_f "$REPO_DIR/keybindings-macos.conf" "$KITTY_CONFIG_DIR/keybindings-macos.conf"
-link_f "$REPO_DIR/keybindings-linux.conf" "$KITTY_CONFIG_DIR/keybindings-linux.conf"
-
-# nvim/ from this repo is not wired in yet - Neovim above is installed as a
-# bare binary only. See README.
+# configs/nvim/ is not wired in yet - Neovim above is installed as a bare
+# binary only. See README.
 
 # Set zsh as the default shell (takes effect after re-login)
 if [ "$SHELL" != "$(which zsh)" ]; then

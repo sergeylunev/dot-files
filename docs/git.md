@@ -1,11 +1,11 @@
 # Git (`gitconfig`, `gitignore_global`)
 
 Installed and linked automatically by `install/install.sh` on all three OSes.
-To link them by hand:
+To (re)link just these two: `install/link.sh git`. Or by hand:
 
 ```bash
-ln -sf ~/PATH_TO_DOTFILES/gitconfig ~/.gitconfig
-ln -sf ~/PATH_TO_DOTFILES/gitignore_global ~/.gitignore_global
+ln -sf ~/PATH_TO_DOTFILES/configs/git/gitconfig ~/.gitconfig
+ln -sf ~/PATH_TO_DOTFILES/configs/git/gitignore_global ~/.gitignore_global
 ```
 
 ## `gitconfig`

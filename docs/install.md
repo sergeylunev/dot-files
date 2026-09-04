@@ -1,16 +1,28 @@
 # How the installer works
 
-Three files, one job each:
+Configs live in [`configs/<app>/`](../configs) (`configs/kitty/`,
+`configs/git/`, `configs/zsh/`, plus `configs/nvim/` which isn't linked yet
+— see `docs/apps.md`). Four files drive installing and linking them:
 
 - **`full-install.sh`** (repo root) — the one-liner bootstrap. Detects
   whether `git` is present (installs it via brew/dnf/apt if not), clones
   this repo to `~/Projects/dot-files` if it isn't already there, and hands
   off to `install/install.sh`.
 - **`install/install_functions.sh`** — shared helper library, sourced (not
-  executed) by `install.sh`.
-- **`install/install.sh`** — the actual installer: OS detection, package
+  executed) by `install.sh` and `link.sh`.
+- **`install/install.sh`** — the full installer: OS detection, package
   manager bootstrap, base toolset, OS-specific extras, oh-my-zsh, and
-  dotfile symlinks, in that order.
+  dotfile symlinks (via `link_configs`), in that order.
+- **`install/link.sh`** — just the dotfile symlinks, none of the rest of
+  `install.sh`. Same idempotent `link_f` under the hood, so it's the way to
+  relink a single app's config after editing it, or to point an existing
+  machine's configs at this repo without reinstalling anything:
+
+  ```bash
+  install/link.sh            # relink every app
+  install/link.sh kitty      # relink just kitty
+  install/link.sh git zsh    # relink git and zsh
+  ```
 
 ## OS detection
 
@@ -36,6 +48,7 @@ the right tool for `$OS_FAMILY`:
 |---|---|---|
 | `install_f <bin> [pkg]` | `which <bin>` | `dnf` / `nala` / `brew` |
 | `link_f <src> <dest>` | `readlink dest == src` | symlink, backing up whatever was at `dest` first |
+| `link_configs [app...]` | delegates to `link_f` per file | symlinks `configs/<app>/*` into `$HOME`, all apps (`zsh`, `git`, `kitty`) or just the ones named |
 | `ensure_flatpak` | (Linux only) | installs `flatpak`, adds the `flathub` remote if missing |
 | `flatpak_f <app-id>` | `flatpak list` | `flatpak install flathub <app-id>` |
 | `cask_f <cask>` | `brew list --cask` | `brew install --cask <cask>` (macOS only) |
@@ -77,8 +90,8 @@ way:
    intentionally separate per OS so one OS's extras can never accidentally
    run on another (see `docs/apps.md` for what each branch installs).
 5. oh-my-zsh + external zsh plugins (see `docs/shell.md`).
-6. Dotfile symlinks: `zshrc`, `gitconfig`, `gitignore_global`, `kitty.conf`.
-7. `nvim/` is deliberately *not* symlinked yet (see `docs/apps.md`).
+6. Dotfile symlinks: `link_configs` (zsh, git, kitty — see `docs/apps.md`).
+7. `configs/nvim/` is deliberately *not* symlinked yet (see `docs/apps.md`).
 8. `chsh -s $(which zsh)` if zsh isn't already the login shell.
 
 ## Other files

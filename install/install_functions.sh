@@ -79,6 +79,65 @@ function link_f {
   echo "Linked: ${dest} -> ${src}"
 }
 
+# Returns success if $1 is among the remaining args.
+function _array_contains {
+  local needle="$1"
+  shift
+  local x
+  for x in "$@"; do
+    [ "$x" = "$needle" ] && return 0
+  done
+  return 1
+}
+
+# Symlinks this repo's configs/ into $HOME, one app at a time. Safe to
+# re-run (see link_f) - relinking an app doesn't touch the others, and
+# relinking everything is a no-op wherever a link is already correct.
+# Relies on REPO_DIR being set by the caller.
+# Usage: link_configs [app...]  - with no app names, links all of them.
+function link_configs {
+  local known_apps=(zsh git kitty)
+  local apps=("$@")
+  local configs_dir="$REPO_DIR/configs"
+
+  if [ ${#apps[@]} -eq 0 ]; then
+    apps=("${known_apps[@]}")
+  fi
+
+  local a
+  for a in "${apps[@]}"; do
+    if ! _array_contains "$a" "${known_apps[@]}"; then
+      echo "Unknown app: ${a} (known: ${known_apps[*]})" >&2
+      exit 1
+    fi
+  done
+
+  if _array_contains zsh "${apps[@]}"; then
+    link_f "$configs_dir/zsh/zshrc" "$HOME/.zshrc"
+    mkdir -p "$HOME/.zsh"
+  fi
+
+  if _array_contains git "${apps[@]}"; then
+    link_f "$configs_dir/git/gitconfig" "$HOME/.gitconfig"
+    link_f "$configs_dir/git/gitignore_global" "$HOME/.gitignore_global"
+  fi
+
+  if _array_contains kitty "${apps[@]}"; then
+    # kitty on macOS is documented to also check ~/Library/Preferences/kitty,
+    # but in practice it unreliably resolves symlinks placed there (see
+    # https://github.com/kovidgoyal/kitty/issues/1331) - ~/.config/kitty is
+    # the path that actually works, on macOS same as Linux.
+    local kitty_config_dir="$HOME/.config/kitty"
+    link_f "$configs_dir/kitty/kitty.conf" "$kitty_config_dir/kitty.conf"
+    # kitty resolves `include` paths relative to kitty.conf's own directory
+    # without following symlinks, so every file it includes needs its own
+    # symlink alongside it too - see docs/apps.md.
+    link_f "$configs_dir/kitty/forest.conf" "$kitty_config_dir/forest.conf"
+    link_f "$configs_dir/kitty/keybindings-macos.conf" "$kitty_config_dir/keybindings-macos.conf"
+    link_f "$configs_dir/kitty/keybindings-linux.conf" "$kitty_config_dir/keybindings-linux.conf"
+  fi
+}
+
 # Makes sure flatpak itself (and the Flathub remote) are set up.
 # Linux-only; no-op if OS_FAMILY is macos.
 function ensure_flatpak {

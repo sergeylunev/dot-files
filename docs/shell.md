@@ -1,11 +1,11 @@
 # Shell (`zshrc`)
 
 zsh config, built on [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh). Installed
-and linked automatically by `install/install.sh` on all three OSes. To link it
-by hand:
+and linked automatically by `install/install.sh` on all three OSes. To
+(re)link it: `install/link.sh zsh`. Or by hand:
 
 ```bash
-ln -sf ~/PATH_TO_DOTFILES/zshrc ~/.zshrc
+ln -sf ~/PATH_TO_DOTFILES/configs/zsh/zshrc ~/.zshrc
 mkdir -p ~/.zsh
 ```
 
