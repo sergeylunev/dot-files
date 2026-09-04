@@ -199,7 +199,7 @@ function install_nerd_font {
 
   echo "Installing (font): ${font_name}..."
   local tmp_zip
-  tmp_zip="$(mktemp --suffix=.zip)"
+  tmp_zip="$(mktemp "${TMPDIR:-/tmp}/dotfiles-font.XXXXXX.zip")"
   curl -fsSL -o "$tmp_zip" "https://github.com/ryanoasis/nerd-fonts/releases/download/${version}/${font_name}.zip"
   mkdir -p "$dest_dir"
   unzip -oq "$tmp_zip" -d "$dest_dir"
@@ -225,21 +225,21 @@ function install_happ {
   case "$OS_FAMILY" in
     fedora)
       local tmp_rpm
-      tmp_rpm="$(mktemp --suffix=.rpm)"
+      tmp_rpm="$(mktemp "${TMPDIR:-/tmp}/dotfiles-happ.XXXXXX.rpm")"
       curl -fsSL -o "$tmp_rpm" "${base_url}/Happ.linux.x64.rpm"
       sudo dnf install -y "$tmp_rpm"
       rm "$tmp_rpm"
       ;;
     ubuntu)
       local tmp_deb
-      tmp_deb="$(mktemp --suffix=.deb)"
+      tmp_deb="$(mktemp "${TMPDIR:-/tmp}/dotfiles-happ.XXXXXX.deb")"
       curl -fsSL -o "$tmp_deb" "${base_url}/Happ.linux.x64.deb"
       sudo apt install -y "$tmp_deb"
       rm "$tmp_deb"
       ;;
     macos)
       local tmp_dmg mount_point
-      tmp_dmg="$(mktemp --suffix=.dmg)"
+      tmp_dmg="$(mktemp "${TMPDIR:-/tmp}/dotfiles-happ.XXXXXX.dmg")"
       curl -fsSL -o "$tmp_dmg" "${base_url}/Happ.macOS.universal.dmg"
       mount_point="$(mktemp -d)"
       hdiutil attach "$tmp_dmg" -mountpoint "$mount_point" -nobrowse -quiet
