@@ -96,7 +96,7 @@ function _array_contains {
 # Relies on REPO_DIR being set by the caller.
 # Usage: link_configs [app...]  - with no app names, links all of them.
 function link_configs {
-  local known_apps=(zsh git kitty)
+  local known_apps=(zsh git kitty zed)
   local apps=("$@")
   local configs_dir="$REPO_DIR/configs"
 
@@ -135,6 +135,12 @@ function link_configs {
     link_f "$configs_dir/kitty/forest.conf" "$kitty_config_dir/forest.conf"
     link_f "$configs_dir/kitty/keybindings-macos.conf" "$kitty_config_dir/keybindings-macos.conf"
     link_f "$configs_dir/kitty/keybindings-linux.conf" "$kitty_config_dir/keybindings-linux.conf"
+  fi
+
+  if _array_contains zed "${apps[@]}"; then
+    # Zed uses ~/.config/zed on every OS, macOS included - no OS branching
+    # needed here (unlike kitty).
+    link_f "$configs_dir/zed/settings.json" "$HOME/.config/zed/settings.json"
   fi
 }
 

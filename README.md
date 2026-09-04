@@ -15,8 +15,8 @@ which detects your OS and:
 - installs the base toolset and the default desktop apps — see
   [`docs/apps.md`](docs/apps.md);
 - installs oh-my-zsh and its plugins — see [`docs/shell.md`](docs/shell.md);
-- symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git` and `kitty`
-  (backing up whatever was there first);
+- symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git`, `kitty` and
+  `zed` (backing up whatever was there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,

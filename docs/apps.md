@@ -40,6 +40,11 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   picked automatically via kitty's `${KITTY_OS}` include-path expansion —
   no OS branching needed for *which* file to use). Fully documented in
   [`docs/kitty-keybindings.md`](kitty-keybindings.md).
+- **Zed** — one of the two default editors (see the table below), installed
+  via `cask_f zed` / `flatpak_f dev.zed.Zed`. Config is
+  [`configs/zed/settings.json`](../configs/zed), symlinked to
+  `~/.config/zed/settings.json` — Zed uses that path on every OS, macOS
+  included, no `~/Library` special-casing needed (unlike kitty).
 - **Neovim** — installed as a bare binary everywhere. The
   [`configs/nvim/`](../configs/nvim) config in this repo (lsp, cmp,
   telescope, treesitter, ...) is **not** linked yet — it needs a pass to

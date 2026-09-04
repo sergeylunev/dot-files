@@ -1,8 +1,9 @@
 # How the installer works
 
 Configs live in [`configs/<app>/`](../configs) (`configs/kitty/`,
-`configs/git/`, `configs/zsh/`, plus `configs/nvim/` which isn't linked yet
-— see `docs/apps.md`). Four files drive installing and linking them:
+`configs/git/`, `configs/zsh/`, `configs/zed/`, plus `configs/nvim/` which
+isn't linked yet — see `docs/apps.md`). Four files drive installing and
+linking them:
 
 - **`full-install.sh`** (repo root) — the one-liner bootstrap. Detects
   whether `git` is present (installs it via brew/dnf/apt if not), clones
@@ -48,7 +49,7 @@ the right tool for `$OS_FAMILY`:
 |---|---|---|
 | `install_f <bin> [pkg]` | `which <bin>` | `dnf` / `nala` / `brew` |
 | `link_f <src> <dest>` | `readlink dest == src` | symlink, backing up whatever was at `dest` first |
-| `link_configs [app...]` | delegates to `link_f` per file | symlinks `configs/<app>/*` into `$HOME`, all apps (`zsh`, `git`, `kitty`) or just the ones named |
+| `link_configs [app...]` | delegates to `link_f` per file | symlinks `configs/<app>/*` into `$HOME`, all apps (`zsh`, `git`, `kitty`, `zed`) or just the ones named |
 | `ensure_flatpak` | (Linux only) | installs `flatpak`, adds the `flathub` remote if missing |
 | `flatpak_f <app-id>` | `flatpak list` | `flatpak install flathub <app-id>` |
 | `cask_f <cask>` | `brew list --cask` | `brew install --cask <cask>` (macOS only) |
@@ -90,7 +91,7 @@ way:
    intentionally separate per OS so one OS's extras can never accidentally
    run on another (see `docs/apps.md` for what each branch installs).
 5. oh-my-zsh + external zsh plugins (see `docs/shell.md`).
-6. Dotfile symlinks: `link_configs` (zsh, git, kitty — see `docs/apps.md`).
+6. Dotfile symlinks: `link_configs` (zsh, git, kitty, zed — see `docs/apps.md`).
 7. `configs/nvim/` is deliberately *not* symlinked yet (see `docs/apps.md`).
 8. `chsh -s $(which zsh)` if zsh isn't already the login shell.
 
