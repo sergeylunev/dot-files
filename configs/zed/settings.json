@@ -7,16 +7,55 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "cli_default_open_behavior": "existing_window",
+  "inlay_hints": {
+    "enabled": true
+  },
+  "show_whitespaces": "selection",
+  "format_on_save": "on",
+  "preferred_line_length": 120,
+  "toolbar": {
+    "code_actions": true,
+    "agent_review": true,
+    "selections_menu": true,
+    "quick_actions": true,
+    "breadcrumbs": true
+  },
+  "minimap": {
+    "current_line_highlight": "none",
+    "thumb": "always",
+    "show": "always"
+  },
+  "scrollbar": {
+    "axes": {
+      "horizontal": true,
+      "vertical": true
+    },
+    "show": "auto"
+  },
+  "relative_line_numbers": "wrapped",
+  "gutter": {
+    "runnables": true,
+    "line_numbers": true
+  },
+  "auto_signature_help": false,
+  "which_key": {
+    "enabled": false
+  },
+  "autosave": "on_focus_change",
+  "show_wrap_guides": true,
+  "current_line_highlight": "all",
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "markdown_preview_code_font_family": "PT Mono",
+  "markdown_preview_font_family": "PT Sans",
+  "buffer_line_height": "comfortable",
+  "when_closing_with_no_tabs": "close_window",
+  "on_last_window_closed": "quit_app",
+  "cli_default_open_behavior": "new_window",
   "session": {
     "trust_all_worktrees": true
   },
-  "ui_font_size": 16,
+  "ui_font_size": 18.0,
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "buffer_font_size": 18,
-  "theme": {
-    "mode": "system",
-    "light": "Forest",
-    "dark": "Forest",
-  },
+  "theme": "Forest",
 }
