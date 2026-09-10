@@ -70,13 +70,35 @@ full list.
 ## Status bar
 
 ```
-set -g status-left "#[bold]#S#[default] "
+set -g status-left ""
 set -g status-right ""
+set -g status-position top
 ```
 
-Left side shows the session name (`#S`, i.e. the project); the middle is
-tmux's own window list, which already highlights whichever window is
-active - that's what tells you "which process, in which project" at a
-glance when you're nested two levels deep. The right side is deliberately
-empty - no clock, no hostname; a single machine doing local project work
-doesn't need either.
+Just the built-in window list in the middle - it already highlights
+whichever window is active, which is what tells you "which process, in
+which project" at a glance when you're nested two levels deep. Nothing on
+either side: no session name (that's in the kitty tab above it instead -
+see below - repeating it here would just be noise), no clock, no hostname.
+
+`status-position top` puts that window list right under the kitty tab
+bar instead of at the bottom of the terminal, so the two levels of "tabs"
+sit stacked on top of each other: kitty tabs (projects) above, tmux
+windows (processes within the current project) directly below.
+
+## Kitty tab title = project name
+
+```
+set -g set-titles on
+set -g set-titles-string "#{=/20/…:#{session_name}}"
+```
+
+tmux doesn't touch the outer terminal's title by default (`set-titles` is
+off out of the box), so without this the kitty tab just shows whatever the
+foreground process last set it to - `nvim`, `claude`, etc. - not the
+project. These two options make tmux report the **session name** instead
+(the project's directory name, from `tmux-sessionize.sh` - stable no
+matter which window/pane you're in or which subdirectory you've `cd`'d
+into), truncated to 20 characters with `…` so a long project name doesn't
+stretch the kitty tab. No changes needed on the kitty side - `kitty.conf`'s
+`tab_title_template` already just displays whatever title it's given.
