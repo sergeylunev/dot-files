@@ -86,6 +86,25 @@ bar instead of at the bottom of the terminal, so the two levels of "tabs"
 sit stacked on top of each other: kitty tabs (projects) above, tmux
 windows (processes within the current project) directly below.
 
+### Colors match the kitty tab bar
+
+```
+set -g status-style "bg=#dfe4cd,fg=#474b48"
+set -g window-status-style "bg=#dfe4cd,fg=#474b48"
+set -g window-status-current-style "bg=#7f8f8a,fg=#dfe4cd,bold"
+```
+
+Without this, tmux falls back to its own default status colors, which
+have nothing to do with [Forest](../configs/kitty/forest.conf) (the theme
+`kitty.conf` uses) - stacking the two bars on top of each other (see
+above) made that mismatch obvious. These three lines pull from the same
+Forest hex values kitty's active/inactive tab colors now use (see
+`docs/apps.md`): the active window gets the theme's accent green
+(`#7f8f8a`, the same color the cursor/selection/urls already use in
+`forest.conf`) with light text, inactive windows sit flush with the bar's
+background color so only the active one stands out - the same
+active/inactive treatment as the kitty tabs above it.
+
 ## Kitty tab title = project name
 
 ```
