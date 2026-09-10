@@ -13,11 +13,14 @@ windows) → **tabs** within an OS window → **kitty windows** within a tab —
 what other terminals/multiplexers would call "panes". How those kitty
 windows are arranged and resized inside a tab is controlled by the active
 **layout** ([kitty layouts docs](https://sw.kovidgoyal.net/kitty/layouts/)).
-This is kitty's native answer to tmux/screen-style pane splitting — see
-[`docs/tmux-research.md`](tmux-research.md) for why this repo relies on it
-instead of configuring a multiplexer: the one thing kitty can't do is
-survive a detach (persist a session across an SSH disconnect or a crashed
-terminal), and that's not a need for local, single-machine work.
+This is kitty's native answer to tmux/screen-style pane splitting *within a
+tab*. It's a separate concern from the tmux session that runs *inside* each
+tab (project = kitty tab = tmux session; see
+[`docs/tmux.md`](tmux.md)) — that tmux config is about giving each project
+a stable set of windows for its different processes (an agent, a plain
+shell, ...), not about pane layout. Nothing here stops you from also
+splitting a kitty tab manually if you want a kitty window next to your
+tmux session.
 
 `kitty.conf` in this repo doesn't set `enabled_layouts`, so all seven
 layouts kitty ships are available:

@@ -12,7 +12,7 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
 
 `git`, `curl`, `wget`, `zsh`, `vim`, `unzip`, `gcc`, `make`, `gh`, `go`
 (package name differs: `golang` / `golang-go` / `go`), bare `neovim`,
-`kitty`.
+`kitty`, `tmux`.
 
 - **`kitty`** — the default terminal emulator on all three OSes. Config lives
   in [`configs/kitty/`](../configs/kitty), symlinked file-by-file into
@@ -40,6 +40,14 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   picked automatically via kitty's `${KITTY_OS}` include-path expansion —
   no OS branching needed for *which* file to use). Fully documented in
   [`docs/kitty-keybindings.md`](kitty-keybindings.md).
+- **`tmux`** — one session per project, named after its directory and
+  opened with `tm` (see [`docs/tmux.md`](tmux.md)), holding a window per
+  process for that project (an `agent` window that starts `claude`, a plain
+  `shell` window). Config is [`configs/tmux/tmux.conf`](../configs/tmux),
+  symlinked to `~/.tmux.conf`; the session-management script,
+  [`configs/tmux/tmux-sessionize.sh`](../configs/tmux), is symlinked to
+  `~/.local/bin/tmux-sessionize` and aliased to `tm` in `zshrc`. No
+  plugins/TPM — see `docs/tmux.md` for why.
 - **Zed** — one of the two default editors (see the table below), installed
   via `cask_f zed` / `flatpak_f dev.zed.Zed`. Config is
   [`configs/zed/settings.json`](../configs/zed), symlinked to

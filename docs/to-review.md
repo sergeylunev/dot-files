@@ -4,7 +4,7 @@ Not installed by `install.sh` on purpose - this is a shortlist to review by
 hand and pick from. Everything here is available in `dnf`, `apt` and `brew`
 (package names may differ slightly; check before adding to `install.sh`).
 
-Already installed today: `bat`, `jq`, `tmux`, `gh`.
+Already installed today: `bat`, `jq`, `gh`.
 
 ## Search / navigation
 - **fzf** - fuzzy finder; fuzzy history search (`^R`), fuzzy file/branch pickers.

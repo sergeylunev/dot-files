@@ -15,8 +15,8 @@ which detects your OS and:
 - installs the base toolset and the default desktop apps — see
   [`docs/apps.md`](docs/apps.md);
 - installs oh-my-zsh and its plugins — see [`docs/shell.md`](docs/shell.md);
-- symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git`, `kitty` and
-  `zed` (backing up whatever was there first);
+- symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git`, `kitty`,
+  `zed` and `tmux` (backing up whatever was there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,
@@ -36,6 +36,7 @@ To (re)link just the configs — no package installs, no oh-my-zsh — run
 | [`docs/git.md`](docs/git.md) | `gitconfig` and `gitignore_global` — settings, credential helper, alias reference |
 | [`docs/install.md`](docs/install.md) | How `install.sh`/`install_functions.sh`/`full-install.sh` work: OS detection, idempotency, structure |
 | [`docs/kitty-keybindings.md`](docs/kitty-keybindings.md) | kitty keyboard shortcuts — custom and default, plus a `cmd`/Super-key caveat on Linux |
+| [`docs/tmux.md`](docs/tmux.md) | `tmux.conf` and `tmux-sessionize.sh` — per-project sessions (`tm`), the `shell`/`agent` window template, keybindings, status bar |
 | [`docs/to-review.md`](docs/to-review.md) | Shortlist of CLI tools worth reviewing by hand — not installed automatically |
 
 ## The end

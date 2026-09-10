@@ -48,6 +48,7 @@ install_f make
 install_f gh
 install_f nvim neovim
 install_f kitty
+install_f tmux
 
 # Go - same install_f mechanism on every OS, package name differs
 case "$OS_FAMILY" in
