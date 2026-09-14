@@ -78,3 +78,6 @@ bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 export PATH=$HOME/.local/bin:$PATH
+
+# Machine-local overrides, not tracked by this repo.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
