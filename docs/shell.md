@@ -55,6 +55,8 @@ alias s='git add -A && git stash && git commit -va && git push'
 alias gcb='git remote update origin --prune && git branch --merged | grep -v "*" | xargs git branch -D'
 alias mkdir='mkdir -p'
 alias sudo='sudo '   # lets an aliased command after `sudo` still expand
+
+alias gg='go mod tidy && go mod vendor'
 ```
 
 These deliberately overlap with the `git` aliases in `docs/git.md` (`git s`,

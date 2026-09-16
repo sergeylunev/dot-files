@@ -25,6 +25,9 @@ alias tm='tmux-sessionize'
 # Enable aliases to be sudo'ed
 alias sudo='sudo '
 
+# go
+alias gg='go mod tidy && go mod vendor'
+
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # Show/hide hidden files in Finder
   alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
