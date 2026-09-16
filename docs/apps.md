@@ -53,15 +53,14 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   [`configs/zed/settings.json`](../configs/zed), symlinked to
   `~/.config/zed/settings.json` — Zed uses that path on every OS, macOS
   included, no `~/Library` special-casing needed (unlike kitty).
-- **Neovim** — installed as a bare binary everywhere. The
-  [`configs/nvim/`](../configs/nvim) config in this repo (lsp, cmp,
-  telescope, treesitter, ...) is **not** linked yet — it needs a pass to
-  bring it up to date first, and `link_configs` doesn't know about it yet
-  either. To link it by hand once it's ready:
-
-  ```bash
-  ln -sf ~/PATH_TO_DOTFILES/configs/nvim ~/.config/nvim
-  ```
+- **Neovim** — installed as a bare binary everywhere. Config is
+  [`configs/nvim/`](../configs/nvim), symlinked to `~/.config/nvim` by
+  `link_configs`. Deliberately minimal for now — just `options.lua` and
+  `keymaps.lua`, no plugin manager, no LSP/completion/telescope/treesitter.
+  The previous plugin-based config (packer, cmp, lsp, telescope, nvim-tree,
+  ...) was removed rather than kept around unused; it's still in git
+  history if it's ever worth resurrecting, but the plan is to design a new
+  one from scratch instead.
 
 ### Containers — Podman, not Docker
 

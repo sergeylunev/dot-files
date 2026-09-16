@@ -96,7 +96,7 @@ function _array_contains {
 # Relies on REPO_DIR being set by the caller.
 # Usage: link_configs [app...]  - with no app names, links all of them.
 function link_configs {
-  local known_apps=(zsh git kitty zed tmux)
+  local known_apps=(zsh git kitty zed tmux nvim)
   local apps=("$@")
   local configs_dir="$REPO_DIR/configs"
 
@@ -149,6 +149,10 @@ function link_configs {
     # ~/.local/bin is already on PATH via zshrc.
     mkdir -p "$HOME/.local/bin"
     link_f "$configs_dir/tmux/tmux-sessionize.sh" "$HOME/.local/bin/tmux-sessionize"
+  fi
+
+  if _array_contains nvim "${apps[@]}"; then
+    link_f "$configs_dir/nvim" "$HOME/.config/nvim"
   fi
 }
 

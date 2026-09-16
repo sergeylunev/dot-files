@@ -50,13 +50,6 @@ keymap("n", "N", "Nzzzv", opts)
 keymap("n", "<leader>h", ":<C-u>split<CR>", opts)
 keymap("n", "<leader>v", ":<C-u>vsplit<CR>", opts)
 
--- Telescope
-keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
-
--- Nvimtree
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
-
 -- Insert --
 -- Press jk fast to exit insert mode 
 keymap("i", "jj", "<ESC>", opts)

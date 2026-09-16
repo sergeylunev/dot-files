@@ -1,9 +1,8 @@
 # How the installer works
 
 Configs live in [`configs/<app>/`](../configs) (`configs/kitty/`,
-`configs/git/`, `configs/zsh/`, `configs/zed/`, `configs/tmux/`, plus
-`configs/nvim/` which isn't linked yet — see `docs/apps.md`). Four files
-drive installing and linking them:
+`configs/git/`, `configs/zsh/`, `configs/zed/`, `configs/tmux/`,
+`configs/nvim/`). Four files drive installing and linking them:
 
 - **`full-install.sh`** (repo root) — the one-liner bootstrap. Detects
   whether `git` is present (installs it via brew/dnf/apt if not), clones
@@ -91,9 +90,9 @@ way:
    intentionally separate per OS so one OS's extras can never accidentally
    run on another (see `docs/apps.md` for what each branch installs).
 5. oh-my-zsh + external zsh plugins (see `docs/shell.md`).
-6. Dotfile symlinks: `link_configs` (zsh, git, kitty, zed, tmux — see `docs/apps.md`).
-7. `configs/nvim/` is deliberately *not* symlinked yet (see `docs/apps.md`).
-8. `chsh -s $(which zsh)` if zsh isn't already the login shell.
+6. Dotfile symlinks: `link_configs` (zsh, git, kitty, zed, tmux, nvim — see
+   `docs/apps.md`).
+7. `chsh -s $(which zsh)` if zsh isn't already the login shell.
 
 ## Other files
 
