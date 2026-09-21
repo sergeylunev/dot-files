@@ -3,7 +3,7 @@
 # Shared helpers for install.sh. Sourced, not executed directly.
 
 # Detects the current OS and, on Linux, the distro family.
-# Sets the global OS_FAMILY to one of: fedora, ubuntu, macos.
+# Sets the global OS_FAMILY to one of: fedora, ubuntu, arch, macos.
 # Exits with an error on anything else, so the rest of the script
 # never has to guess.
 function detect_os {
@@ -17,6 +17,7 @@ function detect_os {
         case "$ID" in
           fedora) OS_FAMILY="fedora" ;;
           ubuntu) OS_FAMILY="ubuntu" ;;
+          arch) OS_FAMILY="arch" ;;
           *)
             echo "Unsupported Linux distro: $ID" >&2
             exit 1
@@ -52,8 +53,23 @@ function install_f {
   case "$OS_FAMILY" in
     fedora) sudo dnf install -y "$pkg_name" ;;
     ubuntu) sudo nala install -y "$pkg_name" ;;
+    arch)   sudo pacman -S --needed --noconfirm "$pkg_name" ;;
     macos)  brew install "$pkg_name" ;;
   esac
+}
+
+# Installs an AUR package with yay (Arch/omarchy only), skipping it if
+# already installed. Usage: aur_f <package-name>
+function aur_f {
+  local pkg_name="$1"
+
+  if pacman -Qq "$pkg_name" &> /dev/null; then
+    echo "Already installed (aur): ${pkg_name}"
+    return 0
+  fi
+
+  echo "Installing (aur): ${pkg_name}..."
+  yay -S --needed --noconfirm "$pkg_name"
 }
 
 # Symlinks $1 -> $2, backing up whatever is already at $2 (file, dir,
@@ -96,7 +112,7 @@ function _array_contains {
 # Relies on REPO_DIR being set by the caller.
 # Usage: link_configs [app...]  - with no app names, links all of them.
 function link_configs {
-  local known_apps=(zsh git kitty zed tmux nvim)
+  local known_apps=(zsh git kitty zed tmux nvim vscode)
   local apps=("$@")
   local configs_dir="$REPO_DIR/configs"
 
@@ -132,7 +148,11 @@ function link_configs {
     # kitty resolves `include` paths relative to kitty.conf's own directory
     # without following symlinks, so every file it includes needs its own
     # symlink alongside it too - see docs/apps.md.
-    link_f "$configs_dir/kitty/forest.conf" "$kitty_config_dir/forest.conf"
+    # Forest is skipped on Arch/omarchy (theme there is decided later);
+    # kitty ignores an `include` of a missing file.
+    if [ "${OS_FAMILY:-}" != "arch" ]; then
+      link_f "$configs_dir/kitty/forest.conf" "$kitty_config_dir/forest.conf"
+    fi
     link_f "$configs_dir/kitty/keybindings-macos.conf" "$kitty_config_dir/keybindings-macos.conf"
     link_f "$configs_dir/kitty/keybindings-linux.conf" "$kitty_config_dir/keybindings-linux.conf"
   fi
@@ -154,6 +174,76 @@ function link_configs {
   if _array_contains nvim "${apps[@]}"; then
     link_f "$configs_dir/nvim" "$HOME/.config/nvim"
   fi
+
+  if _array_contains vscode "${apps[@]}"; then
+    local vscode_user_dir
+    if [ "${OS_FAMILY:-}" = "macos" ]; then
+      vscode_user_dir="$HOME/Library/Application Support/Code/User"
+    else
+      vscode_user_dir="$HOME/.config/Code/User"
+    fi
+    link_f "$configs_dir/vscode/settings.json" "$vscode_user_dir/settings.json"
+    # Local theme extension: VSCode picks up any folder in ~/.vscode/extensions.
+    link_f "$configs_dir/vscode/customforest" "$HOME/.vscode/extensions/local.customforest-0.0.1"
+  fi
+}
+
+# Installs VSCode natively (no flatpak) via the OS's own mechanism:
+# Microsoft's repo on Fedora/Ubuntu, AUR on Arch, a cask on macOS.
+# Idempotent: skips if `code` is already on PATH.
+function install_vscode {
+  if which code &> /dev/null; then
+    echo "Already installed: code"
+    return 0
+  fi
+
+  echo "Installing: vscode..."
+  case "$OS_FAMILY" in
+    fedora)
+      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+      printf '[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc\n' \
+        | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+      sudo dnf install -y code
+      ;;
+    ubuntu)
+      sudo mkdir -p -m 755 /etc/apt/keyrings
+      wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/packages.microsoft.gpg > /dev/null
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+      sudo apt update
+      sudo apt install -y code
+      ;;
+    arch)
+      aur_f visual-studio-code-bin
+      ;;
+    macos)
+      cask_f visual-studio-code
+      ;;
+  esac
+}
+
+# Installs every extension listed in configs/vscode/extensions.txt (one ID
+# per line, # comments allowed) that isn't installed yet.
+# Relies on REPO_DIR. No-op if `code` isn't on PATH.
+function install_vscode_extensions {
+  local list="$REPO_DIR/configs/vscode/extensions.txt"
+
+  if ! which code &> /dev/null; then
+    echo "code not on PATH, skipping VSCode extensions" >&2
+    return 0
+  fi
+
+  local installed ext
+  installed="$(code --list-extensions)"
+  while read -r ext; do
+    ext="${ext%%#*}"
+    ext="$(echo "$ext" | xargs)"
+    [ -z "$ext" ] && continue
+    if echo "$installed" | grep -qix "$ext"; then
+      echo "Already installed (vscode ext): ${ext}"
+    else
+      code --install-extension "$ext"
+    fi
+  done < "$list"
 }
 
 # Makes sure flatpak itself (and the Flathub remote) are set up.
@@ -266,5 +356,97 @@ function install_happ {
       rm "$tmp_dmg"
       rmdir "$mount_point"
       ;;
+  esac
+}
+
+# --- Keyboard layouts ------------------------------------------------------
+# Same behaviour everywhere: layouts us + ru, capslock as left Ctrl,
+# alt+shift cycles layouts, ctrl+shift+1 -> us, ctrl+shift+2 -> ru.
+# See docs/keyboard.md.
+
+function setup_keyboard_kde {
+  local kwrite
+  kwrite="$(which kwriteconfig6 2> /dev/null || which kwriteconfig5 2> /dev/null || true)"
+  if [ -z "$kwrite" ]; then
+    echo "kwriteconfig not found, skipping KDE keyboard setup" >&2
+    return 0
+  fi
+
+  "$kwrite" --file kxkbrc --group Layout --key Use true
+  "$kwrite" --file kxkbrc --group Layout --key LayoutList us,ru
+  "$kwrite" --file kxkbrc --group Layout --key VariantList ,
+  "$kwrite" --file kxkbrc --group Layout --key ResetOldOptions true
+  "$kwrite" --file kxkbrc --group Layout --key Options ctrl:nocaps,grp:alt_shift_toggle
+
+  "$kwrite" --file kglobalshortcutsrc --group "KDE Keyboard Layout Switcher" \
+    --key "Switch keyboard layout to English (US)" "Ctrl+Shift+1,none,Switch keyboard layout to English (US)"
+  "$kwrite" --file kglobalshortcutsrc --group "KDE Keyboard Layout Switcher" \
+    --key "Switch keyboard layout to Russian" "Ctrl+Shift+2,none,Switch keyboard layout to Russian"
+
+  # Ask the running session to pick the new config up; harmless if it fails.
+  dbus-send --session --type=signal /Layouts org.kde.keyboard.reloadConfig 2> /dev/null || true
+}
+
+# Written blind - not verifiable on the dev machine (see docs/keyboard.md).
+function setup_keyboard_gnome {
+  if ! which gsettings &> /dev/null; then
+    echo "gsettings not found, skipping GNOME keyboard setup" >&2
+    return 0
+  fi
+
+  gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru')]"
+  gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps', 'grp:alt_shift_toggle']"
+
+  # ctrl+shift+1/2 as custom shortcuts that select the layout by index.
+  local base="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+  local schema="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding"
+  local name binding idx
+  local existing
+  existing="$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)"
+  local paths="$existing"
+
+  for idx in 0 1; do
+    if [ "$idx" = 0 ]; then name="dotfiles-kbd-us"; binding="<Primary><Shift>1"; else name="dotfiles-kbd-ru"; binding="<Primary><Shift>2"; fi
+    gsettings set "$schema:$base/$name/" name "Layout $name"
+    gsettings set "$schema:$base/$name/" command "gsettings set org.gnome.desktop.input-sources current $idx"
+    gsettings set "$schema:$base/$name/" binding "$binding"
+    if ! echo "$paths" | grep -q "$base/$name/"; then
+      if [ "$paths" = "@as []" ] || [ "$paths" = "[]" ]; then
+        paths="['$base/$name/']"
+      else
+        paths="${paths%]}, '$base/$name/']"
+      fi
+    fi
+  done
+
+  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "$paths"
+}
+
+# Written blind - not verifiable on the dev machine (see docs/keyboard.md).
+function setup_keyboard_hyprland {
+  local hypr_dir="$HOME/.config/hypr"
+  local main_conf="$hypr_dir/hyprland.conf"
+  local snippet="$hypr_dir/dotfiles-keyboard.conf"
+  local source_line="source = $snippet"
+
+  link_f "$REPO_DIR/configs/hyprland/keyboard.conf" "$snippet"
+
+  if [ -f "$main_conf" ] && ! grep -qxF "$source_line" "$main_conf"; then
+    echo "$source_line" >> "$main_conf"
+    echo "Added to hyprland.conf: ${source_line}"
+  fi
+
+  if which hyprctl &> /dev/null && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+    hyprctl reload > /dev/null || true
+  fi
+}
+
+# Picks the right setup by the running desktop; unknown desktops are skipped.
+function setup_keyboard {
+  case "${XDG_CURRENT_DESKTOP:-}" in
+    *KDE*)      setup_keyboard_kde ;;
+    *GNOME*)    setup_keyboard_gnome ;;
+    *Hyprland*) setup_keyboard_hyprland ;;
+    *) echo "No keyboard setup for desktop '${XDG_CURRENT_DESKTOP:-unknown}', skipping" ;;
   esac
 }

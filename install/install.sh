@@ -26,6 +26,9 @@ case "$OS_FAMILY" in
     sudo apt install nala -y
     sudo nala fetch --ubuntu --auto --fetches=5
     ;;
+  arch)
+    sudo pacman -Syu --noconfirm
+    ;;
   macos)
     if ! which brew &> /dev/null; then
       echo "Installing Homebrew..."
@@ -45,7 +48,10 @@ install_f vim
 install_f unzip
 install_f gcc
 install_f make
-install_f gh
+case "$OS_FAMILY" in
+  arch) install_f gh github-cli ;;
+  *)    install_f gh ;;
+esac
 install_f nvim neovim
 install_f kitty
 install_f tmux
@@ -54,6 +60,7 @@ install_f tmux
 case "$OS_FAMILY" in
   fedora) GO_PKG="golang" ;;
   ubuntu) GO_PKG="golang-go" ;;
+  arch)   GO_PKG="go" ;;
   macos)  GO_PKG="go" ;;
 esac
 install_f go "$GO_PKG"
@@ -74,8 +81,10 @@ fi
 # Nerd Font, same download-and-extract mechanism on every OS
 install_nerd_font JetBrainsMono v3.4.0
 
-# Happ - VPN/proxy client, same GitHub-release install on every OS
-install_happ
+# Happ - VPN/proxy client, GitHub-release install (no Arch asset published)
+if [ "$OS_FAMILY" != "arch" ]; then
+  install_happ
+fi
 
 # --- OS-specific extras --------------------------------------------------
 # Add machine/OS-specific software here as needed; these blocks are
@@ -138,6 +147,10 @@ case "$OS_FAMILY" in
     dconf load /org/gnome/terminal/ < "$REPO_DIR/gnome-terminal-backup.txt"
     ;;
 
+  arch)
+    # Base set only; omarchy brings its own desktop apps and Hyprland setup.
+    ;;
+
   macos)
     cask_f zen                # browser (primary)
     cask_f chromium           # browser (secondary; Thorium's cask is broken/deprecated)
@@ -147,6 +160,12 @@ case "$OS_FAMILY" in
     cask_f steam              # gaming
     ;;
 esac
+
+# --- VSCode ----------------------------------------------------------------
+# Native install on every OS (no flatpak); settings, theme and extensions
+# are linked/installed below and via link_configs.
+
+install_vscode
 
 # --- oh-my-zsh -----------------------------------------------------------
 
@@ -171,6 +190,9 @@ fi
 # directly to (re)link a single app's config later, e.g. after editing it.
 
 link_configs
+
+install_vscode_extensions
+setup_keyboard
 
 # configs/nvim/ is not wired in yet - Neovim above is installed as a bare
 # binary only. See README.

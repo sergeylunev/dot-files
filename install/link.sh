@@ -16,6 +16,8 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 . "$SCRIPT_DIR/install_functions.sh"
 
+detect_os
+
 link_configs "$@"
 
 echo "Done."

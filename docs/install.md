@@ -110,3 +110,14 @@ dconf load /org/gnome/terminal/ < gnome-terminal-backup.txt
 Small standalone helper, not called from `install.sh`. Unloads the
 `kvm`/`kvm_intel` kernel modules — useful before starting a VM manager that
 wants exclusive access to hardware virtualization.
+
+## Arch / omarchy
+
+`ID=arch` in `/etc/os-release` is its own `OS_FAMILY` (`arch`). Packages go
+through `pacman -S --needed` (`install_f`) and AUR packages through
+`yay` (`aur_f`); already installed ones are skipped. Only the base toolset
+is installed (Happ has no Arch asset and is skipped). Configs are linked as
+elsewhere, except kitty's Forest theme (`forest.conf`), which isn't linked
+on Arch. Hyprland customisation beyond keyboard layouts is out of scope.
+See also [`keyboard.md`](keyboard.md) and the VSCode section in
+[`apps.md`](apps.md).
