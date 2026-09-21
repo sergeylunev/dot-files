@@ -238,7 +238,7 @@ function install_vscode_extensions {
     ext="${ext%%#*}"
     ext="$(echo "$ext" | xargs)"
     [ -z "$ext" ] && continue
-    if echo "$installed" | grep -qix "$ext"; then
+    if echo "$installed" | grep -qixF "$ext"; then
       echo "Already installed (vscode ext): ${ext}"
     else
       code --install-extension "$ext"
@@ -431,9 +431,15 @@ function setup_keyboard_hyprland {
 
   link_f "$REPO_DIR/configs/hyprland/keyboard.conf" "$snippet"
 
-  if [ -f "$main_conf" ] && ! grep -qxF "$source_line" "$main_conf"; then
+  if [ ! -f "$main_conf" ]; then
+    echo "WARNING: $main_conf not found - keyboard.conf is linked but NOT loaded; add '${source_line}' by hand" >&2
+  elif ! grep -qxF "$source_line" "$main_conf"; then
     echo "$source_line" >> "$main_conf"
     echo "Added to hyprland.conf: ${source_line}"
+  fi
+
+  if grep -rhE '^\s*bind\s*=\s*(CTRL SHIFT|SHIFT CTRL|CONTROL SHIFT), *[12]\b' "$hypr_dir" --include='*.conf' --exclude=dotfiles-keyboard.conf 2> /dev/null | grep -q .; then
+    echo "WARNING: existing Hyprland binds on ctrl+shift+1/2 found in $hypr_dir - they may conflict" >&2
   fi
 
   if which hyprctl &> /dev/null && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
