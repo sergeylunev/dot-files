@@ -61,6 +61,10 @@ on top of it:
 | Shortcut | Action |
 |---|---|
 | `prefix h` / `j` / `k` / `l` | Move to the pane left / below / above / right (vim-style, in addition to the default `prefix` + arrow keys) |
+| `prefix Tab` | Switch to the previously active window, and back again (`last-window`). Being a prefix binding it doesn't conflict with kitty's shortcuts |
+
+Windows and panes are numbered from 1 (`base-index`, `pane-base-index`),
+and closing a window renumbers the rest without gaps (`renumber-windows`).
 
 Everything else - new window (`prefix c`), next/previous window
 (`prefix n`/`prefix p`), split panes (`prefix %`/`prefix "`), detach
