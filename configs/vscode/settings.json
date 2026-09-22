@@ -1,0 +1,10 @@
+{
+  "workbench.colorTheme": "CustomForest",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "editor.formatOnSave": true,
+  "editor.rulers": [120],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "telemetry.telemetryLevel": "off",
+  "update.mode": "manual"
+}

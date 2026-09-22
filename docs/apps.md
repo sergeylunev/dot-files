@@ -12,7 +12,7 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
 
 `git`, `curl`, `wget`, `zsh`, `vim`, `unzip`, `gcc`, `make`, `gh`, `go`
 (package name differs: `golang` / `golang-go` / `go`), bare `neovim`,
-`kitty`, `tmux`.
+`kitty`, `tmux` (`pacman` on Arch; `gh` is `github-cli` there).
 
 - **`kitty`** — the default terminal emulator on all three OSes. Config lives
   in [`configs/kitty/`](../configs/kitty), symlinked file-by-file into
@@ -119,3 +119,21 @@ Obsidian, Discord/Slack, Docker (Podman replaces it), LibreOffice, VLC.
 `docs/to-review.md` has a shortlist of modern CLI tools (fzf, ripgrep, eza,
 lazygit, starship, ...) worth reviewing by hand — none of them are
 installed automatically either.
+
+## VSCode
+
+Installed natively, never via flatpak, by `install_vscode`: Microsoft's
+repo on Fedora and Ubuntu, `brew --cask visual-studio-code` on macOS,
+`visual-studio-code-bin` from the AUR (`yay`) on Arch/omarchy. Idempotent
+(skipped if `code` is on PATH).
+
+- `configs/vscode/settings.json` → `~/.config/Code/User/settings.json`
+  (`~/Library/Application Support/Code/User/` on macOS).
+- `configs/vscode/extensions.txt` — one ID per line, installed with
+  `code --install-extension` if missing.
+- `configs/vscode/customforest/` — local light theme **CustomForest**
+  (palette from the Forest themes of kitty and Zed), linked to
+  `~/.vscode/extensions/local.customforest-0.0.1` and selected in
+  `settings.json`.
+
+Relink with `install/link.sh vscode`.

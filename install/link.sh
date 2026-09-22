@@ -16,6 +16,10 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 . "$SCRIPT_DIR/install_functions.sh"
 
+# detect_os exits on unknown OSes, but linking works anywhere - OS_FAMILY is
+# only used for OS-specific link targets, so fall back to unset.
+(detect_os > /dev/null 2>&1) && detect_os || echo "Unrecognised OS, linking with generic paths" >&2
+
 link_configs "$@"
 
 echo "Done."

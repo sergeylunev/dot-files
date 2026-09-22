@@ -1,0 +1,3 @@
+# One extension ID per line; installed by install_vscode_extensions.
+golang.go
+ms-python.python
