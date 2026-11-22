@@ -23,44 +23,54 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   so `~/.config/kitty` is the path that actually works. `kitty.conf` sets
   JetBrains Mono Nerd Font as the terminal font, among other tweaks — see
   the file itself (heavily commented, organized in foldable sections).
-  Color scheme is `forest.conf`, pulled in via `include forest.conf` — a
-  port of the
-  [CustomForest iTerm2 theme](https://github.com/sergeylunev/CustomForestTheme)
-  (ansi colors, background/foreground, cursor, selection, URL color; iTerm
-  fields with no kitty equivalent — badge, cursor guide, search-match
-  background — are dropped). It's a separate file rather than inlined so it
-  can be swapped for another `kitten themes` scheme later without touching
-  the rest of `kitty.conf`. kitty resolves `include` paths relative to
+  Color scheme is `ash.conf` (Ash Greige), pulled in via `include
+  ash.conf` — the kitty port of the Ash theme (ANSI colors,
+  background/foreground, cursor, selection, URL color). It's a separate
+  file rather than inlined so it can be swapped for another scheme later
+  without touching the rest of `kitty.conf`; `forest.conf` is still linked
+  as an alternative. kitty resolves `include` paths relative to
   `kitty.conf`'s own directory *without following symlinks*, so
   `link_configs` (in `install/install_functions.sh`) symlinks every file
   `kitty.conf` includes into the same config directory, not just
-  `kitty.conf` itself — that's `forest.conf` plus
-  `keybindings-macos.conf`/`keybindings-linux.conf`, the OS-specific
+  `kitty.conf` itself — that's `ash.conf` (plus `forest.conf` off Arch)
+  plus `keybindings-macos.conf`/`keybindings-linux.conf`, the OS-specific
   keyboard shortcuts (`cmd` on macOS, `ctrl`-based equivalents on Linux,
   picked automatically via kitty's `${KITTY_OS}` include-path expansion —
   no OS branching needed for *which* file to use). Fully documented in
-  [`docs/kitty-keybindings.md`](kitty-keybindings.md).
+  [`docs/kitty-keybindings.md`](kitty-keybindings.md) and
+  [`docs/ash.md`](ash.md).
 - **`tmux`** — one session per project, named after its directory and
   opened with `tm` (see [`docs/tmux.md`](tmux.md)), holding a window per
   process for that project (a plain `shell` window, an `nvim` window when
   it's a git repo, and an `opencode` window). Config is [`configs/tmux/tmux.conf`](../configs/tmux),
   symlinked to `~/.tmux.conf`; the session-management script,
   [`configs/tmux/tmux-sessionize.sh`](../configs/tmux), is symlinked to
-  `~/.local/bin/tmux-sessionize` and wrapped by `tm` in `zshrc`. No
-  plugins/TPM — see `docs/tmux.md` for why.
+  `~/.local/bin/tmux-sessionize` and wrapped by `tm` in `zshrc`. The status
+  bar uses the same Ash (Greige) palette as kitty's tab bar
+  ([`docs/ash.md`](ash.md)). No plugins/TPM — see `docs/tmux.md` for why.
 - **Zed** — one of the two default editors (see the table below), installed
   via `cask_f zed` / `flatpak_f dev.zed.Zed`. Config is
   [`configs/zed/settings.json`](../configs/zed), symlinked to
   `~/.config/zed/settings.json` — Zed uses that path on every OS, macOS
-  included, no `~/Library` special-casing needed (unlike kitty).
+  included, no `~/Library` special-casing needed (unlike kitty). Themes are
+  [`configs/zed/themes/`](../configs/zed/themes): `ash.json` (Ash
+  Warm/Greige/Neutral) and `forest.json`; `settings.json` picks Ash Greige
+  for light and Forest Dark for dark — see [`docs/ash.md`](ash.md).
 - **Neovim** — installed as a bare binary everywhere. Config is
   [`configs/nvim/`](../configs/nvim), symlinked to `~/.config/nvim` by
-  `link_configs`. Deliberately minimal for now — just `options.lua` and
-  `keymaps.lua`, no plugin manager, no LSP/completion/telescope/treesitter.
-  The previous plugin-based config (packer, cmp, lsp, telescope, nvim-tree,
-  ...) was removed rather than kept around unused; it's still in git
-  history if it's ever worth resurrecting, but the plan is to design a new
-  one from scratch instead.
+  `link_configs`. A single-file `init.lua` with `lazy.nvim` (plugins
+  bootstrapped on first launch, pinned by `lazy-lock.json`), LSP via
+  `nvim-lspconfig` + Mason, tree-sitter, `blink.cmp` completion, conform
+  formatting on save, `mini.statusline` and nvim-tree. Colorscheme is Ash,
+  Greige by default, from [`colors/ash.lua`](../configs/nvim/colors/ash.lua)
+  (all three variants via `vim.g.ash_variant`) — see
+  [`docs/ash.md`](ash.md).
+- **OpenCode** — the agent launched in the `opencode` tmux window (see
+  [`docs/tmux.md`](tmux.md)); the binary itself isn't installed by
+  `install.sh` yet. Config is [`configs/opencode/`](../configs/opencode),
+  symlinked into `~/.config/opencode/`: `cli.json` selects the Ash Greige
+  theme, and `themes/` holds the three ash variants plus the optional
+  Forest theme (see [`docs/ash.md`](ash.md)).
 
 ### Containers — Podman, not Docker
 
@@ -131,9 +141,12 @@ repo on Fedora and Ubuntu, `brew --cask visual-studio-code` on macOS,
   (`~/Library/Application Support/Code/User/` on macOS).
 - `configs/vscode/extensions.txt` — one ID per line, installed with
   `code --install-extension` if missing.
-- `configs/vscode/customforest/` — local light theme **CustomForest**
-  (palette from the Forest themes of kitty and Zed), linked to
-  `~/.vscode/extensions/local.customforest-0.0.1` and selected in
-  `settings.json`.
+- `configs/vscode/customash/` — local light theme extension **CustomAsh**,
+  contributing **Ash Warm**, **Ash Greige** and **Ash Neutral** (palette
+  from [`docs/ash.md`](ash.md)), linked to
+  `~/.vscode/extensions/local.customash-0.0.1` and selected in
+  `settings.json` (Ash Greige).
+- `configs/vscode/customforest/` — the older local **CustomForest** theme,
+  still linked as an alternative.
 
 Relink with `install/link.sh vscode`.

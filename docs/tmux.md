@@ -3,7 +3,8 @@
 The second level of a two-level "tabs" workflow: a **kitty tab** is a
 project, opened at that project's directory; inside it, a **tmux session**
 (same project, same name) holds one window per process you care about for
-that project - an agent, a plain shell, and whatever else you add. Kitty's
+that project - a plain shell, nvim, an opencode agent, and whatever else
+you add. Kitty's
 own window/layout system (see [`docs/kitty-keybindings.md`](kitty-keybindings.md))
 is a separate, unrelated way to split a *single* tab into panes - the two
 don't compete, you can use both.
@@ -94,21 +95,22 @@ windows (processes within the current project) directly below.
 ### Colors match the kitty tab bar
 
 ```
-set -g status-style "bg=#dfe4cd,fg=#474b48"
-set -g window-status-style "bg=#dfe4cd,fg=#474b48"
-set -g window-status-current-style "bg=#7f8f8a,fg=#dfe4cd,bold"
+set -g status-style "bg=#f4f2ed,fg=#8a8680"
+set -g window-status-style "bg=#f4f2ed,fg=#8a8680"
+set -g window-status-current-style "bg=#686560,fg=#f4f2ed,bold"
 ```
 
 Without this, tmux falls back to its own default status colors, which
-have nothing to do with [Forest](../configs/kitty/forest.conf) (the theme
+have nothing to do with [Ash](../configs/kitty/ash.conf) (the theme
 `kitty.conf` uses) - stacking the two bars on top of each other (see
 above) made that mismatch obvious. These three lines pull from the same
-Forest hex values kitty's active/inactive tab colors now use (see
-`docs/apps.md`): the active window gets the theme's accent green
-(`#7f8f8a`, the same color the cursor/selection/urls already use in
-`forest.conf`) with light text, inactive windows sit flush with the bar's
-background color so only the active one stands out - the same
-active/inactive treatment as the kitty tabs above it.
+Ash (Greige) hex values kitty's active/inactive tab colors use (see
+[`docs/ash.md`](ash.md)): Ash is monochrome with a single red accent
+reserved for strings/links/errors, so the bar stays neutral - the active
+window gets the focused-border grey (`#686560`) with light text, inactive
+windows sit flush with the terminal background (`#f4f2ed`) so only the
+active one stands out - the same active/inactive treatment as the kitty
+tabs above it.
 
 ## Kitty tab title = project name
 

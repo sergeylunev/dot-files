@@ -16,7 +16,8 @@ which detects your OS and:
   [`docs/apps.md`](docs/apps.md);
 - installs oh-my-zsh and its plugins — see [`docs/shell.md`](docs/shell.md);
 - symlinks [`configs/`](configs) into `$HOME` — `zsh`, `git`, `kitty`,
-  `zed` and `tmux` (backing up whatever was there first);
+  `zed`, `tmux`, `nvim`, `opencode` and `vscode` (backing up whatever was
+  there first);
 - sets zsh as the default shell.
 
 Safe to re-run: every step checks whether it's already done before doing it,
@@ -32,6 +33,7 @@ To (re)link just the configs — no package installs, no oh-my-zsh — run
 | File | Covers |
 |---|---|
 | [`docs/apps.md`](docs/apps.md) | Base toolset, default desktop apps per OS, what's *not* installed |
+| [`docs/ash.md`](docs/ash.md) | Ash theme — variants, per-app files, how to switch; Forest as the alternative |
 | [`docs/shell.md`](docs/shell.md) | `zshrc` — oh-my-zsh theme/plugins, aliases, env, history, completion, keybindings |
 | [`docs/git.md`](docs/git.md) | `gitconfig` and `gitignore_global` — settings, credential helper, alias reference |
 | [`docs/install.md`](docs/install.md) | How `install.sh`/`install_functions.sh`/`full-install.sh` work: OS detection, idempotency, structure |

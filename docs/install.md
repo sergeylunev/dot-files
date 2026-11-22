@@ -2,7 +2,8 @@
 
 Configs live in [`configs/<app>/`](../configs) (`configs/kitty/`,
 `configs/git/`, `configs/zsh/`, `configs/zed/`, `configs/tmux/`,
-`configs/nvim/`). Four files drive installing and linking them:
+`configs/nvim/`, `configs/opencode/`, `configs/vscode/`). Four files drive
+installing and linking them:
 
 - **`full-install.sh`** (repo root) — the one-liner bootstrap. Detects
   whether `git` is present (installs it via brew/dnf/apt if not), clones
@@ -48,7 +49,7 @@ the right tool for `$OS_FAMILY`:
 |---|---|---|
 | `install_f <bin> [pkg]` | `which <bin>` | `dnf` / `nala` / `brew` |
 | `link_f <src> <dest>` | `readlink dest == src` | symlink, backing up whatever was at `dest` first |
-| `link_configs [app...]` | delegates to `link_f` per file | symlinks `configs/<app>/*` into `$HOME`, all apps (`zsh`, `git`, `kitty`, `zed`, `tmux`) or just the ones named |
+| `link_configs [app...]` | delegates to `link_f` per file | symlinks `configs/<app>/*` into `$HOME`, all apps (`zsh`, `git`, `kitty`, `zed`, `tmux`, `nvim`, `opencode`, `vscode`) or just the ones named |
 | `ensure_flatpak` | (Linux only) | installs `flatpak`, adds the `flathub` remote if missing |
 | `flatpak_f <app-id>` | `flatpak list` | `flatpak install flathub <app-id>` |
 | `cask_f <cask>` | `brew list --cask` | `brew install --cask <cask>` (macOS only) |
@@ -90,8 +91,8 @@ way:
    intentionally separate per OS so one OS's extras can never accidentally
    run on another (see `docs/apps.md` for what each branch installs).
 5. oh-my-zsh + external zsh plugins (see `docs/shell.md`).
-6. Dotfile symlinks: `link_configs` (zsh, git, kitty, zed, tmux, nvim — see
-   `docs/apps.md`).
+6. Dotfile symlinks: `link_configs` (zsh, git, kitty, zed, tmux, nvim,
+   opencode, vscode — see `docs/apps.md`).
 7. `chsh -s $(which zsh)` if zsh isn't already the login shell.
 
 ## Other files
@@ -118,6 +119,7 @@ through `pacman -S --needed` (`install_f`) and AUR packages through
 `yay` (`aur_f`); already installed ones are skipped. Only the base toolset
 is installed (Happ has no Arch asset and is skipped). Configs are linked as
 elsewhere, except kitty's Forest theme (`forest.conf`), which isn't linked
-on Arch. Hyprland customisation beyond keyboard layouts is out of scope.
+on Arch. Ash (`ash.conf`) is the active theme and is linked everywhere.
+Hyprland customisation beyond keyboard layouts is out of scope.
 See also [`keyboard.md`](keyboard.md) and the VSCode section in
 [`apps.md`](apps.md).

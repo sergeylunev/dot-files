@@ -1,0 +1,27 @@
+{
+  "name": "customash",
+  "displayName": "CustomAsh",
+  "publisher": "local",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Ash Warm",
+        "uiTheme": "vs",
+        "path": "./themes/ash-warm-color-theme.json"
+      },
+      {
+        "label": "Ash Greige",
+        "uiTheme": "vs",
+        "path": "./themes/ash-greige-color-theme.json"
+      },
+      {
+        "label": "Ash Neutral",
+        "uiTheme": "vs",
+        "path": "./themes/ash-neutral-color-theme.json"
+      }
+    ]
+  }
+}

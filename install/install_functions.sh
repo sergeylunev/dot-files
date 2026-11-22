@@ -112,7 +112,7 @@ function _array_contains {
 # Relies on REPO_DIR being set by the caller.
 # Usage: link_configs [app...]  - with no app names, links all of them.
 function link_configs {
-  local known_apps=(zsh git kitty zed tmux nvim vscode)
+  local known_apps=(zsh git kitty zed tmux nvim opencode vscode)
   local apps=("$@")
   local configs_dir="$REPO_DIR/configs"
 
@@ -149,7 +149,9 @@ function link_configs {
     # without following symlinks, so every file it includes needs its own
     # symlink alongside it too - see docs/apps.md.
     # Forest is skipped on Arch/omarchy (theme there is decided later);
-    # kitty ignores an `include` of a missing file.
+    # kitty ignores an `include` of a missing file. Ash is the active theme
+    # now, so it's linked everywhere.
+    link_f "$configs_dir/kitty/ash.conf" "$kitty_config_dir/ash.conf"
     if [ "${OS_FAMILY:-}" != "arch" ]; then
       link_f "$configs_dir/kitty/forest.conf" "$kitty_config_dir/forest.conf"
     fi
@@ -162,6 +164,7 @@ function link_configs {
     # needed here (unlike kitty).
     link_f "$configs_dir/zed/settings.json" "$HOME/.config/zed/settings.json"
     link_f "$configs_dir/zed/themes/forest.json" "$HOME/.config/zed/themes/forest.json"
+    link_f "$configs_dir/zed/themes/ash.json" "$HOME/.config/zed/themes/ash.json"
   fi
 
   if _array_contains tmux "${apps[@]}"; then
@@ -175,6 +178,15 @@ function link_configs {
     link_f "$configs_dir/nvim" "$HOME/.config/nvim"
   fi
 
+  if _array_contains opencode "${apps[@]}"; then
+    local opencode_dir="$HOME/.config/opencode"
+    link_f "$configs_dir/opencode/cli.json" "$opencode_dir/cli.json"
+    local theme
+    for theme in ash-warm ash-greige ash-neutral forest; do
+      link_f "$configs_dir/opencode/themes/${theme}.json" "$opencode_dir/themes/${theme}.json"
+    done
+  fi
+
   if _array_contains vscode "${apps[@]}"; then
     local vscode_user_dir
     if [ "${OS_FAMILY:-}" = "macos" ]; then
@@ -183,8 +195,9 @@ function link_configs {
       vscode_user_dir="$HOME/.config/Code/User"
     fi
     link_f "$configs_dir/vscode/settings.json" "$vscode_user_dir/settings.json"
-    # Local theme extension: VSCode picks up any folder in ~/.vscode/extensions.
+    # Local theme extensions: VSCode picks up any folder in ~/.vscode/extensions.
     link_f "$configs_dir/vscode/customforest" "$HOME/.vscode/extensions/local.customforest-0.0.1"
+    link_f "$configs_dir/vscode/customash" "$HOME/.vscode/extensions/local.customash-0.0.1"
   fi
 }
 

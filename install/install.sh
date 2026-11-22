@@ -194,9 +194,6 @@ link_configs
 install_vscode_extensions
 setup_keyboard
 
-# configs/nvim/ is not wired in yet - Neovim above is installed as a bare
-# binary only. See README.
-
 # Set zsh as the default shell (takes effect after re-login)
 if [ "$SHELL" != "$(which zsh)" ]; then
   chsh -s "$(which zsh)"
