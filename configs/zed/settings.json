@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Zed (Default)",
+  "markdown_preview": {
+    "font_family": "PT Sans",
+    "code_font_family": "PT Mono"
+  },
   "inlay_hints": {
     "enabled": true
   },
@@ -45,8 +50,6 @@
   "show_wrap_guides": true,
   "current_line_highlight": "all",
   "multi_cursor_modifier": "cmd_or_ctrl",
-  "markdown_preview_code_font_family": "PT Mono",
-  "markdown_preview_font_family": "PT Sans",
   "buffer_line_height": "comfortable",
   "when_closing_with_no_tabs": "close_window",
   "on_last_window_closed": "quit_app",
@@ -57,5 +60,9 @@
   "ui_font_size": 18.0,
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "buffer_font_size": 18,
-  "theme": "Forest",
+  "theme": {
+    "mode": "system",
+    "light": "Ash Greige",
+    "dark": "Forest Dark"
+  },
 }

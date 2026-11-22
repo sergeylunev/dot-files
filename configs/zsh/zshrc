@@ -21,7 +21,13 @@ alias gsm='git add -A && git commit -va && git push'
 alias s='git add -A && git stash && git commit -va && git push'
 alias gcb='git remote update origin --prune && git branch --merged | grep -v "*" | xargs git branch -D'
 alias mkdir='mkdir -p'
-alias tm='tmux-sessionize'
+# Re-enter $PWD first: if the dir was deleted and recreated, bash in
+# tmux-sessionize would otherwise fail getcwd() with "shell-init" errors.
+unalias tm 2>/dev/null
+tm() {
+  cd -- "$PWD" 2>/dev/null || { echo "tm: $PWD no longer exists" >&2; return 1; }
+  tmux-sessionize "$@"
+}
 # Enable aliases to be sudo'ed
 alias sudo='sudo '
 

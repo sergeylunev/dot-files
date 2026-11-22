@@ -42,11 +42,11 @@ Fedora, `apt` via `nala` on Ubuntu, `brew` on macOS):
   [`docs/kitty-keybindings.md`](kitty-keybindings.md).
 - **`tmux`** — one session per project, named after its directory and
   opened with `tm` (see [`docs/tmux.md`](tmux.md)), holding a window per
-  process for that project (an `agent` window that starts `claude`, a plain
-  `shell` window). Config is [`configs/tmux/tmux.conf`](../configs/tmux),
+  process for that project (a plain `shell` window, an `nvim` window when
+  it's a git repo, and an `opencode` window). Config is [`configs/tmux/tmux.conf`](../configs/tmux),
   symlinked to `~/.tmux.conf`; the session-management script,
   [`configs/tmux/tmux-sessionize.sh`](../configs/tmux), is symlinked to
-  `~/.local/bin/tmux-sessionize` and aliased to `tm` in `zshrc`. No
+  `~/.local/bin/tmux-sessionize` and wrapped by `tm` in `zshrc`. No
   plugins/TPM — see `docs/tmux.md` for why.
 - **Zed** — one of the two default editors (see the table below), installed
   via `cask_f zed` / `flatpak_f dev.zed.Zed`. Config is

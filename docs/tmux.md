@@ -18,7 +18,7 @@ ln -sf ~/PATH_TO_DOTFILES/configs/tmux/tmux-sessionize.sh ~/.local/bin/tmux-sess
 
 ## Starting a project session
 
-`tm` (aliased in `zshrc` to `tmux-sessionize`) attaches to the tmux session
+`tm` (a `zshrc` function wrapping `tmux-sessionize`) attaches to the tmux session
 for the current directory, creating it first if it doesn't exist:
 
 ```bash
@@ -32,15 +32,16 @@ confused by it). Running `tm` again from the same directory - in the same
 kitty tab, a new one, or after a crash - always re-attaches to the same
 session instead of creating a duplicate.
 
-A freshly created session gets two windows:
+A freshly created session gets up to three windows, in this order:
 
 | Window | What it does |
 |---|---|
 | `shell` | Plain shell, `cd`'d into the project directory. Selected as the active window on attach. |
-| `agent` | Also `cd`'d into the project directory, but starts `claude` immediately - assumes the `claude` CLI is already on `PATH` (not installed by `install.sh`). If `claude` exits or isn't found, the window drops into a plain shell instead of closing - tmux would otherwise close a window the instant the command it ran exits, silently. |
+| `nvim` | Also `cd`'d into the project directory, starts `nvim` — but only if the directory is a git repo (checked with `git rev-parse --git-dir`). If `nvim` exits, the window drops into a plain shell. |
+| `opencode` | Also `cd`'d into the project directory, but starts `opencode` immediately - assumes the `opencode` CLI is already on `PATH` (not installed by `install.sh`). If `opencode` exits or isn't found, the window drops into a plain shell instead of closing - tmux would otherwise close a window the instant the command it ran exits, silently. |
 
 Add more windows by hand as needed (`prefix c` for a new one, `prefix ,` to
-rename it) - the two above are just the starting point, not a limit.
+rename it) - the ones above are just the starting point, not a limit.
 
 ## Why no plugins / TPM
 
@@ -118,7 +119,7 @@ set -g set-titles-string "#{=/20/…:#{session_name}}"
 
 tmux doesn't touch the outer terminal's title by default (`set-titles` is
 off out of the box), so without this the kitty tab just shows whatever the
-foreground process last set it to - `nvim`, `claude`, etc. - not the
+foreground process last set it to - `nvim`, `opencode`, etc. - not the
 project. These two options make tmux report the **session name** instead
 (the project's directory name, from `tmux-sessionize.sh` - stable no
 matter which window/pane you're in or which subdirectory you've `cd`'d
